@@ -59,8 +59,8 @@ export function ErrorState() {
 }
 
 type CardProps = {
-  to: string;
-  params: Record<string, string>;
+  to: "/programs/$slug" | "/projects/$slug" | "/news/$slug";
+  params: { slug: string };
   title: string;
   summary: string;
   image?: string | null;
