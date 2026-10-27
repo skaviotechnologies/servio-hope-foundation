@@ -41,15 +41,15 @@ function AuthPage() {
     setBusy(true);
     try {
       if (mode === "reset") {
-        const email = z.string().email().safeParse(raw.email?.trim());
-        if (!email.success) return toast.error("Enter a valid email");
+        const email = z.string().email().safeParse(raw["email"]?.trim());
+        if (!email.success) { toast.error("Enter a valid email"); return; }
         const { error } = await supabase.auth.resetPasswordForEmail(email.data, { redirectTo: `${window.location.origin}/reset-password` });
         if (error) throw error;
         toast.success("If an account exists, a reset link has been sent.");
         return;
       }
       const p = schema.safeParse(raw);
-      if (!p.success) return toast.error(p.error.issues[0].message);
+      if (!p.success) { toast.error(p.error.issues[0]?.message ?? "Invalid input"); return; }
       if (mode === "in") {
         const { error } = await supabase.auth.signInWithPassword(p.data);
         if (error) throw error;
