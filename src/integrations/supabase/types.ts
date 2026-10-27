@@ -14,16 +14,315 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      messages: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          is_read: boolean
+          kind: string
+          message: string
+          name: string
+          phone: string | null
+          subject: string | null
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          is_read?: boolean
+          kind?: string
+          message: string
+          name: string
+          phone?: string | null
+          subject?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          is_read?: boolean
+          kind?: string
+          message?: string
+          name?: string
+          phone?: string | null
+          subject?: string | null
+        }
+        Relationships: []
+      }
+      posts: {
+        Row: {
+          body: string
+          cover_url: string | null
+          created_at: string
+          excerpt: string
+          id: string
+          published: boolean
+          published_at: string | null
+          slug: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          body?: string
+          cover_url?: string | null
+          created_at?: string
+          excerpt?: string
+          id?: string
+          published?: boolean
+          published_at?: string | null
+          slug: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          body?: string
+          cover_url?: string | null
+          created_at?: string
+          excerpt?: string
+          id?: string
+          published?: boolean
+          published_at?: string | null
+          slug?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      programs: {
+        Row: {
+          body: string
+          created_at: string
+          id: string
+          image_url: string | null
+          published: boolean
+          slug: string
+          sort_order: number
+          summary: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          body?: string
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          published?: boolean
+          slug: string
+          sort_order?: number
+          summary?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          published?: boolean
+          slug?: string
+          sort_order?: number
+          summary?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      projects: {
+        Row: {
+          body: string
+          created_at: string
+          id: string
+          image_url: string | null
+          location: string | null
+          program_id: string | null
+          published: boolean
+          slug: string
+          sort_order: number
+          status: string
+          summary: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          body?: string
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          location?: string | null
+          program_id?: string | null
+          published?: boolean
+          slug: string
+          sort_order?: number
+          status?: string
+          summary?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          location?: string | null
+          program_id?: string | null
+          published?: boolean
+          slug?: string
+          sort_order?: number
+          status?: string
+          summary?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "projects_program_id_fkey"
+            columns: ["program_id"]
+            isOneToOne: false
+            referencedRelation: "programs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      site_settings: {
+        Row: {
+          abbreviation: string
+          about_intro: string | null
+          address: string | null
+          country: string
+          domain: string | null
+          donate_instructions: string | null
+          donate_intro: string | null
+          email: string | null
+          facebook_url: string | null
+          favicon_url: string | null
+          footer_logo_url: string | null
+          header_logo_url: string | null
+          hero_image_url: string | null
+          hero_subtitle: string
+          hero_title: string
+          id: number
+          instagram_url: string | null
+          legal_status: string
+          linkedin_url: string | null
+          logo_url: string | null
+          mission: string | null
+          motto: string
+          og_image_url: string | null
+          org_name: string
+          phone: string | null
+          registration_number: string | null
+          updated_at: string
+          values: string | null
+          vision: string | null
+          volunteer_intro: string | null
+          x_url: string | null
+          youtube_url: string | null
+        }
+        Insert: {
+          abbreviation?: string
+          about_intro?: string | null
+          address?: string | null
+          country?: string
+          domain?: string | null
+          donate_instructions?: string | null
+          donate_intro?: string | null
+          email?: string | null
+          facebook_url?: string | null
+          favicon_url?: string | null
+          footer_logo_url?: string | null
+          header_logo_url?: string | null
+          hero_image_url?: string | null
+          hero_subtitle?: string
+          hero_title?: string
+          id?: number
+          instagram_url?: string | null
+          legal_status?: string
+          linkedin_url?: string | null
+          logo_url?: string | null
+          mission?: string | null
+          motto?: string
+          og_image_url?: string | null
+          org_name?: string
+          phone?: string | null
+          registration_number?: string | null
+          updated_at?: string
+          values?: string | null
+          vision?: string | null
+          volunteer_intro?: string | null
+          x_url?: string | null
+          youtube_url?: string | null
+        }
+        Update: {
+          abbreviation?: string
+          about_intro?: string | null
+          address?: string | null
+          country?: string
+          domain?: string | null
+          donate_instructions?: string | null
+          donate_intro?: string | null
+          email?: string | null
+          facebook_url?: string | null
+          favicon_url?: string | null
+          footer_logo_url?: string | null
+          header_logo_url?: string | null
+          hero_image_url?: string | null
+          hero_subtitle?: string
+          hero_title?: string
+          id?: number
+          instagram_url?: string | null
+          legal_status?: string
+          linkedin_url?: string | null
+          logo_url?: string | null
+          mission?: string | null
+          motto?: string
+          og_image_url?: string | null
+          org_name?: string
+          phone?: string | null
+          registration_number?: string | null
+          updated_at?: string
+          values?: string | null
+          vision?: string | null
+          volunteer_intro?: string | null
+          x_url?: string | null
+          youtube_url?: string | null
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      is_staff: { Args: { _user_id: string }; Returns: boolean }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "editor"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +449,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "editor"],
+    },
   },
 } as const
