@@ -1,5 +1,5 @@
 import { createFileRoute, Link, Outlet, useNavigate } from "@tanstack/react-router";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { FileText, FolderKanban, Inbox, LayoutDashboard, LogOut, Menu, Newspaper, Settings, ExternalLink, ShieldAlert } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { DEFAULT_LOGO } from "@/lib/site";
 import { cn } from "@/lib/utils";
+import { useRoles } from "@/lib/roles";
 
 export const Route = createFileRoute("/_authenticated/admin")({
   head: () => ({
@@ -29,18 +30,6 @@ const LINKS = [
   { to: "/admin/messages", label: "Messages", icon: Inbox },
   { to: "/admin/settings", label: "Site settings", icon: Settings },
 ] as const;
-
-export function useRoles() {
-  return useQuery({
-    queryKey: ["my-roles"],
-    queryFn: async () => {
-      const { data: u } = await supabase.auth.getUser();
-      if (!u.user) return { email: "", roles: [] as string[] };
-      const { data } = await supabase.from("user_roles").select("role").eq("user_id", u.user.id);
-      return { email: u.user.email ?? "", roles: (data ?? []).map((r) => r.role as string) };
-    },
-  });
-}
 
 function AdminLayout() {
   const roles = useRoles();

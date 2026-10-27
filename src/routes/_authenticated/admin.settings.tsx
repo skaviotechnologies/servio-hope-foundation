@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ImageUpload } from "@/components/admin/ImageUpload";
 import { settingsQuery, type Settings } from "@/lib/site";
-import { useRoles } from "./admin";
+import { useRoles } from "@/lib/roles";
 
 export const Route = createFileRoute("/_authenticated/admin/settings")({
   component: SettingsPage,

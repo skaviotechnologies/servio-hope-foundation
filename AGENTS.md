@@ -8,3 +8,9 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+## Project rules
+- Public pages live under the `_site` pathless layout; admin pages under `_authenticated/admin*`. Why: shared header/footer vs. separate dashboard shell.
+- All site content (settings, programs, projects, posts, messages) is read/written via the browser Supabase client with RLS; staff access via `has_role`/`is_staff`. Why: CMS editable without code.
+- The `media` storage bucket is private (workspace blocks public buckets); uploads store 10-year signed URLs. Why: public images without a public bucket.
+- First account to sign up becomes admin (DB trigger); later accounts need a role row. Why: bootstrap without manual DB work.
