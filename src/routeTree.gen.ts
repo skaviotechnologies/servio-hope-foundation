@@ -9,27 +9,289 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SiteRouteImport } from './routes/_site'
+import { Route as SiteIndexRouteImport } from './routes/_site.index'
+import { Route as SiteAboutRouteImport } from './routes/_site.about'
+import { Route as SiteContactRouteImport } from './routes/_site.contact'
+import { Route as SiteDonateRouteImport } from './routes/_site.donate'
+import { Route as SiteGetInvolvedRouteImport } from './routes/_site.get-involved'
+import { Route as SiteNewsIndexRouteImport } from './routes/_site.news.index'
+import { Route as SiteNewsSlugRouteImport } from './routes/_site.news.$slug'
+import { Route as SiteProgramsIndexRouteImport } from './routes/_site.programs.index'
+import { Route as SiteProgramsSlugRouteImport } from './routes/_site.programs.$slug'
+import { Route as SiteProjectsIndexRouteImport } from './routes/_site.projects.index'
+import { Route as SiteProjectsSlugRouteImport } from './routes/_site.projects.$slug'
 
-export interface FileRoutesByFullPath {}
-export interface FileRoutesByTo {}
+const SiteRoute = SiteRouteImport.update({
+  id: '/_site',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SiteIndexRoute = SiteIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => SiteRoute,
+} as any)
+const SiteAboutRoute = SiteAboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => SiteRoute,
+} as any)
+const SiteContactRoute = SiteContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => SiteRoute,
+} as any)
+const SiteDonateRoute = SiteDonateRouteImport.update({
+  id: '/donate',
+  path: '/donate',
+  getParentRoute: () => SiteRoute,
+} as any)
+const SiteGetInvolvedRoute = SiteGetInvolvedRouteImport.update({
+  id: '/get-involved',
+  path: '/get-involved',
+  getParentRoute: () => SiteRoute,
+} as any)
+const SiteNewsIndexRoute = SiteNewsIndexRouteImport.update({
+  id: '/news/',
+  path: '/news/',
+  getParentRoute: () => SiteRoute,
+} as any)
+const SiteNewsSlugRoute = SiteNewsSlugRouteImport.update({
+  id: '/news/$slug',
+  path: '/news/$slug',
+  getParentRoute: () => SiteRoute,
+} as any)
+const SiteProgramsIndexRoute = SiteProgramsIndexRouteImport.update({
+  id: '/programs/',
+  path: '/programs/',
+  getParentRoute: () => SiteRoute,
+} as any)
+const SiteProgramsSlugRoute = SiteProgramsSlugRouteImport.update({
+  id: '/programs/$slug',
+  path: '/programs/$slug',
+  getParentRoute: () => SiteRoute,
+} as any)
+const SiteProjectsIndexRoute = SiteProjectsIndexRouteImport.update({
+  id: '/projects/',
+  path: '/projects/',
+  getParentRoute: () => SiteRoute,
+} as any)
+const SiteProjectsSlugRoute = SiteProjectsSlugRouteImport.update({
+  id: '/projects/$slug',
+  path: '/projects/$slug',
+  getParentRoute: () => SiteRoute,
+} as any)
+
+export interface FileRoutesByFullPath {
+  '/': typeof SiteIndexRoute
+  '/about': typeof SiteAboutRoute
+  '/contact': typeof SiteContactRoute
+  '/donate': typeof SiteDonateRoute
+  '/get-involved': typeof SiteGetInvolvedRoute
+  '/news/$slug': typeof SiteNewsSlugRoute
+  '/programs/$slug': typeof SiteProgramsSlugRoute
+  '/projects/$slug': typeof SiteProjectsSlugRoute
+  '/news/': typeof SiteNewsIndexRoute
+  '/programs/': typeof SiteProgramsIndexRoute
+  '/projects/': typeof SiteProjectsIndexRoute
+}
+export interface FileRoutesByTo {
+  '/about': typeof SiteAboutRoute
+  '/contact': typeof SiteContactRoute
+  '/donate': typeof SiteDonateRoute
+  '/get-involved': typeof SiteGetInvolvedRoute
+  '/': typeof SiteIndexRoute
+  '/news/$slug': typeof SiteNewsSlugRoute
+  '/programs/$slug': typeof SiteProgramsSlugRoute
+  '/projects/$slug': typeof SiteProjectsSlugRoute
+  '/news': typeof SiteNewsIndexRoute
+  '/programs': typeof SiteProgramsIndexRoute
+  '/projects': typeof SiteProjectsIndexRoute
+}
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
+  '/_site': typeof SiteRouteWithChildren
+  '/_site/about': typeof SiteAboutRoute
+  '/_site/contact': typeof SiteContactRoute
+  '/_site/donate': typeof SiteDonateRoute
+  '/_site/get-involved': typeof SiteGetInvolvedRoute
+  '/_site/': typeof SiteIndexRoute
+  '/_site/news/$slug': typeof SiteNewsSlugRoute
+  '/_site/programs/$slug': typeof SiteProgramsSlugRoute
+  '/_site/projects/$slug': typeof SiteProjectsSlugRoute
+  '/_site/news/': typeof SiteNewsIndexRoute
+  '/_site/programs/': typeof SiteProgramsIndexRoute
+  '/_site/projects/': typeof SiteProjectsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: never
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/contact'
+    | '/donate'
+    | '/get-involved'
+    | '/news/$slug'
+    | '/programs/$slug'
+    | '/projects/$slug'
+    | '/news/'
+    | '/programs/'
+    | '/projects/'
   fileRoutesByTo: FileRoutesByTo
-  to: never
-  id: '__root__'
+  to:
+    | '/about'
+    | '/contact'
+    | '/donate'
+    | '/get-involved'
+    | '/'
+    | '/news/$slug'
+    | '/programs/$slug'
+    | '/projects/$slug'
+    | '/news'
+    | '/programs'
+    | '/projects'
+  id:
+    | '__root__'
+    | '/_site'
+    | '/_site/about'
+    | '/_site/contact'
+    | '/_site/donate'
+    | '/_site/get-involved'
+    | '/_site/'
+    | '/_site/news/$slug'
+    | '/_site/programs/$slug'
+    | '/_site/projects/$slug'
+    | '/_site/news/'
+    | '/_site/programs/'
+    | '/_site/projects/'
   fileRoutesById: FileRoutesById
 }
-export interface RootRouteChildren {}
-
-declare module '@tanstack/react-router' {
-  interface FileRoutesByPath {}
+export interface RootRouteChildren {
+  SiteRoute: typeof SiteRouteWithChildren
 }
 
-const rootRouteChildren: RootRouteChildren = {}
+declare module '@tanstack/react-router' {
+  interface FileRoutesByPath {
+    '/_site': {
+      id: '/_site'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof SiteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_site/': {
+      id: '/_site/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof SiteIndexRouteImport
+      parentRoute: typeof SiteRoute
+    }
+    '/_site/about': {
+      id: '/_site/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof SiteAboutRouteImport
+      parentRoute: typeof SiteRoute
+    }
+    '/_site/contact': {
+      id: '/_site/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof SiteContactRouteImport
+      parentRoute: typeof SiteRoute
+    }
+    '/_site/donate': {
+      id: '/_site/donate'
+      path: '/donate'
+      fullPath: '/donate'
+      preLoaderRoute: typeof SiteDonateRouteImport
+      parentRoute: typeof SiteRoute
+    }
+    '/_site/get-involved': {
+      id: '/_site/get-involved'
+      path: '/get-involved'
+      fullPath: '/get-involved'
+      preLoaderRoute: typeof SiteGetInvolvedRouteImport
+      parentRoute: typeof SiteRoute
+    }
+    '/_site/news/': {
+      id: '/_site/news/'
+      path: '/news'
+      fullPath: '/news/'
+      preLoaderRoute: typeof SiteNewsIndexRouteImport
+      parentRoute: typeof SiteRoute
+    }
+    '/_site/news/$slug': {
+      id: '/_site/news/$slug'
+      path: '/news/$slug'
+      fullPath: '/news/$slug'
+      preLoaderRoute: typeof SiteNewsSlugRouteImport
+      parentRoute: typeof SiteRoute
+    }
+    '/_site/programs/': {
+      id: '/_site/programs/'
+      path: '/programs'
+      fullPath: '/programs/'
+      preLoaderRoute: typeof SiteProgramsIndexRouteImport
+      parentRoute: typeof SiteRoute
+    }
+    '/_site/programs/$slug': {
+      id: '/_site/programs/$slug'
+      path: '/programs/$slug'
+      fullPath: '/programs/$slug'
+      preLoaderRoute: typeof SiteProgramsSlugRouteImport
+      parentRoute: typeof SiteRoute
+    }
+    '/_site/projects/': {
+      id: '/_site/projects/'
+      path: '/projects'
+      fullPath: '/projects/'
+      preLoaderRoute: typeof SiteProjectsIndexRouteImport
+      parentRoute: typeof SiteRoute
+    }
+    '/_site/projects/$slug': {
+      id: '/_site/projects/$slug'
+      path: '/projects/$slug'
+      fullPath: '/projects/$slug'
+      preLoaderRoute: typeof SiteProjectsSlugRouteImport
+      parentRoute: typeof SiteRoute
+    }
+  }
+}
+
+interface SiteRouteChildren {
+  SiteAboutRoute: typeof SiteAboutRoute
+  SiteContactRoute: typeof SiteContactRoute
+  SiteDonateRoute: typeof SiteDonateRoute
+  SiteGetInvolvedRoute: typeof SiteGetInvolvedRoute
+  SiteIndexRoute: typeof SiteIndexRoute
+  SiteNewsSlugRoute: typeof SiteNewsSlugRoute
+  SiteProgramsSlugRoute: typeof SiteProgramsSlugRoute
+  SiteProjectsSlugRoute: typeof SiteProjectsSlugRoute
+  SiteNewsIndexRoute: typeof SiteNewsIndexRoute
+  SiteProgramsIndexRoute: typeof SiteProgramsIndexRoute
+  SiteProjectsIndexRoute: typeof SiteProjectsIndexRoute
+}
+
+const SiteRouteChildren: SiteRouteChildren = {
+  SiteAboutRoute: SiteAboutRoute,
+  SiteContactRoute: SiteContactRoute,
+  SiteDonateRoute: SiteDonateRoute,
+  SiteGetInvolvedRoute: SiteGetInvolvedRoute,
+  SiteIndexRoute: SiteIndexRoute,
+  SiteNewsSlugRoute: SiteNewsSlugRoute,
+  SiteProgramsSlugRoute: SiteProgramsSlugRoute,
+  SiteProjectsSlugRoute: SiteProjectsSlugRoute,
+  SiteNewsIndexRoute: SiteNewsIndexRoute,
+  SiteProgramsIndexRoute: SiteProgramsIndexRoute,
+  SiteProjectsIndexRoute: SiteProjectsIndexRoute,
+}
+
+const SiteRouteWithChildren = SiteRoute._addFileChildren(SiteRouteChildren)
+
+const rootRouteChildren: RootRouteChildren = {
+  SiteRoute: SiteRouteWithChildren,
+}
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
