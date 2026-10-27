@@ -56,7 +56,7 @@ export const bySlug = <T extends "programs" | "projects" | "posts">(table: T, sl
   queryOptions({
     queryKey: [table, "slug", slug],
     queryFn: async () => {
-      const { data, error } = await supabase.from(table).select("*").eq("slug", slug).eq("published", true).maybeSingle();
+      const { data, error } = await supabase.from(table as "programs").select("*").eq("slug", slug).eq("published", true).maybeSingle();
       if (error) throw error;
       return data as Database["public"]["Tables"][T]["Row"] | null;
     },

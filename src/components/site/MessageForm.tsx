@@ -38,7 +38,7 @@ export function MessageForm({ kind, cta = "Send message", messageLabel = "Messag
       kind, name: d.name, email: d.email, phone: d.phone || null, subject: d.subject || null, message: d.message,
     });
     setBusy(false);
-    if (error) return toast.error("Sorry, your message could not be sent. Please try again.");
+    if (error) { toast.error("Sorry, your message could not be sent. Please try again."); return; }
     form.reset();
     setSent(true);
     toast.success("Thank you — we have received your message.");

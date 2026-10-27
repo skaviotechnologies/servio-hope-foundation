@@ -4,7 +4,7 @@ import { ArrowRight, Inbox } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { statusLabel } from "@/lib/site";
 
-export function PageHero({ eyebrow, title, intro, image }: { eyebrow: string; title: string; intro?: string | null; image?: string }) {
+export function PageHero({ eyebrow, title, intro, image }: { eyebrow: string; title: string; intro?: string | null | undefined; image?: string | undefined }) {
   return (
     <section className="relative isolate overflow-hidden bg-navy text-primary-foreground">
       {image && <img src={image} alt="" className="absolute inset-0 -z-10 h-full w-full object-cover opacity-40" />}
@@ -18,7 +18,7 @@ export function PageHero({ eyebrow, title, intro, image }: { eyebrow: string; ti
   );
 }
 
-export function SectionHeading({ eyebrow, title, intro, action }: { eyebrow: string; title: string; intro?: string; action?: ReactNode }) {
+export function SectionHeading({ eyebrow, title, intro, action }: { eyebrow: string; title: string; intro?: string | undefined; action?: ReactNode }) {
   return (
     <div className="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
       <div className="max-w-2xl">
@@ -63,10 +63,10 @@ type CardProps = {
   params: { slug: string };
   title: string;
   summary: string;
-  image?: string | null;
+  image?: string | null | undefined;
   fallback: string;
-  badge?: string | null;
-  meta?: string | null;
+  badge?: string | null | undefined;
+  meta?: string | null | undefined;
 };
 
 export function ContentCard({ to, params, title, summary, image, fallback, badge, meta }: CardProps) {

@@ -18,7 +18,7 @@ export type Field =
   | { name: string; label: string; type: "text" | "textarea" | "longtext" | "number" | "image"; required?: boolean }
   | { name: string; label: string; type: "select"; options: { value: string; label: string }[] };
 
-type Row = Record<string, any> & { id: string; published: boolean; title: string; slug: string };
+type Row = { id: string; published: boolean; title: string; slug: string; image_url?: string | null; cover_url?: string | null; published_at?: string | null; created_at?: string; updated_at?: string; [k: string]: any };
 
 export function ContentManager({ table, title, singular, fields, orderBy = "sort_order", defaults = {}, publicPath }: {
   table: "programs" | "projects" | "posts";
@@ -49,7 +49,7 @@ export function ContentManager({ table, title, singular, fields, orderBy = "sort
 
   const save = useMutation({
     mutationFn: async (row: Partial<Row>) => {
-      const payload: Record<string, any> = { ...row };
+      const payload: any = { ...row };
       payload.slug = slugify(payload.slug || payload.title || "");
       if (!payload.title?.trim()) throw new Error("Title is required");
       if (!payload.slug) throw new Error("Slug is required");
@@ -66,7 +66,7 @@ export function ContentManager({ table, title, singular, fields, orderBy = "sort
 
   const toggle = useMutation({
     mutationFn: async (r: Row) => {
-      const patch: Record<string, any> = { published: !r.published };
+      const patch: any = { published: !r.published };
       if (table === "posts" && !r.published && !r.published_at) patch.published_at = new Date().toISOString();
       const { error } = await supabase.from(table).update(patch as never).eq("id", r.id);
       if (error) throw error;
