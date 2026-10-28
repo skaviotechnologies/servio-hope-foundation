@@ -15,6 +15,13 @@
       "when": 1793143913127,
       "tag": "0001_migration",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1793167370967,
+      "tag": "0002_foundation_about_and_leadership",
+      "breakpoints": true
     }
   ]
 }

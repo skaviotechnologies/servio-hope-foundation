@@ -14,6 +14,42 @@ export type Database = {
   }
   public: {
     Tables: {
+      about_sections: {
+        Row: {
+          body: string
+          created_at: string
+          id: string
+          image_url: string | null
+          published: boolean
+          slug: string
+          sort_order: number
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          body?: string
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          published?: boolean
+          slug: string
+          sort_order?: number
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          published?: boolean
+          slug?: string
+          sort_order?: number
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       messages: {
         Row: {
           created_at: string
@@ -286,6 +322,45 @@ export type Database = {
           volunteer_intro?: string | null
           x_url?: string | null
           youtube_url?: string | null
+        }
+        Relationships: []
+      }
+      team_members: {
+        Row: {
+          body: string
+          created_at: string
+          id: string
+          image_url: string | null
+          position: string
+          published: boolean
+          slug: string
+          sort_order: number
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          body?: string
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          position?: string
+          published?: boolean
+          slug: string
+          sort_order?: number
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          position?: string
+          published?: boolean
+          slug?: string
+          sort_order?: number
+          title?: string
+          updated_at?: string
         }
         Relationships: []
       }

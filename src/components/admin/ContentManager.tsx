@@ -18,16 +18,18 @@ export type Field =
   | { name: string; label: string; type: "text" | "textarea" | "longtext" | "number" | "image"; required?: boolean }
   | { name: string; label: string; type: "select"; options: { value: string; label: string }[] };
 
-type Row = { id: string; published: boolean; title: string; slug: string; image_url?: string | null; cover_url?: string | null; published_at?: string | null; created_at?: string; updated_at?: string; [k: string]: any };
+type Row = { id: string; published: boolean; title: string; slug: string; position?: string; image_url?: string | null; cover_url?: string | null; published_at?: string | null; created_at?: string; updated_at?: string; [k: string]: any };
 
-export function ContentManager({ table, title, singular, fields, orderBy = "sort_order", defaults = {}, publicPath }: {
-  table: "programs" | "projects" | "posts";
+export function ContentManager({ table, title, singular, fields, orderBy = "sort_order", defaults = {}, publicPath, nameLabel = "Title", approvalRequired = false }: {
+  table: "programs" | "projects" | "posts" | "about_sections" | "team_members";
   title: string;
   singular: string;
   fields: Field[];
   orderBy?: string;
   defaults?: Record<string, any>;
   publicPath: string;
+  nameLabel?: string;
+  approvalRequired?: boolean;
 }) {
   const qc = useQueryClient();
   const key = ["admin", table];
@@ -93,6 +95,8 @@ export function ContentManager({ table, title, singular, fields, orderBy = "sort
         <Button onClick={() => setEditing({ published: false, ...defaults })}><Plus /> New {singular}</Button>
       </div>
 
+      {approvalRequired && <p role="note" className="mt-5 border-l-4 border-gold bg-gold/10 p-4 text-sm text-ink">Draft content — administrator approval required. Review and verify each item before approving publication. Unpublished drafts are not visible on the website.</p>}
+
       <div className="mt-8 overflow-hidden rounded-2xl border bg-card">
         {list.isLoading ? (
           <div className="space-y-3 p-6">{[0, 1, 2].map((i) => <Skeleton key={i} className="h-12" />)}</div>
@@ -109,10 +113,10 @@ export function ContentManager({ table, title, singular, fields, orderBy = "sort
                   <div className="h-12 w-16 shrink-0 overflow-hidden rounded-lg bg-soft">{img && <img src={img} alt="" className="h-full w-full object-cover" />}</div>
                   <div className="min-w-0 flex-1">
                     <p className="truncate font-semibold text-navy">{r.title}</p>
-                    <p className="truncate text-xs text-muted-foreground">{publicPath}/{r.slug}</p>
+                    <p className="truncate text-xs text-muted-foreground">{table === "team_members" ? r.position : `${publicPath}${table === "about_sections" ? "#" : "/"}${r.slug}`}</p>
                   </div>
                   <span className={`hidden rounded-full px-2.5 py-1 text-xs font-semibold sm:inline ${r.published ? "bg-emerald text-secondary-foreground" : "bg-muted text-muted-foreground"}`}>{r.published ? "Published" : "Draft"}</span>
-                  <Button variant="ghost" size="icon" aria-label={r.published ? "Unpublish" : "Publish"} onClick={() => toggle.mutate(r)}>{r.published ? <EyeOff /> : <Eye />}</Button>
+                  <Button variant="ghost" size="icon" disabled={toggle.isPending} aria-label={r.published ? "Unpublish" : approvalRequired ? "Approve and publish" : "Publish"} title={r.published ? "Unpublish" : approvalRequired ? "Approve and publish" : "Publish"} onClick={() => toggle.mutate(r)}>{r.published ? <EyeOff /> : <Eye />}</Button>
                   <Button variant="ghost" size="icon" aria-label="Edit" onClick={() => setEditing(r)}><Pencil /></Button>
                   <Button variant="ghost" size="icon" aria-label="Delete" onClick={() => setDeleting(r)}><Trash2 className="text-destructive" /></Button>
                 </li>
@@ -127,7 +131,7 @@ export function ContentManager({ table, title, singular, fields, orderBy = "sort
           <DialogHeader><DialogTitle>{editing?.id ? `Edit ${singular}` : `New ${singular}`}</DialogTitle></DialogHeader>
           {editing && (
             <form id="cm-form" className="grid gap-4" onSubmit={(e) => { e.preventDefault(); save.mutate(editing); }}>
-              <div className="space-y-1.5"><Label htmlFor="f-title">Title</Label><Input id="f-title" value={editing.title ?? ""} onChange={(e) => set("title", e.target.value)} required maxLength={200} /></div>
+              <div className="space-y-1.5"><Label htmlFor="f-title">{nameLabel}</Label><Input id="f-title" value={editing.title ?? ""} onChange={(e) => set("title", e.target.value)} required maxLength={200} /></div>
               <div className="space-y-1.5"><Label htmlFor="f-slug">URL slug</Label><Input id="f-slug" value={editing.slug ?? ""} placeholder={slugify(editing.title ?? "")} onChange={(e) => set("slug", e.target.value)} maxLength={80} /><p className="text-xs text-muted-foreground">Leave empty to generate from the title.</p></div>
               {fields.map((f) => (
                 <div key={f.name} className="space-y-1.5">
@@ -144,7 +148,7 @@ export function ContentManager({ table, title, singular, fields, orderBy = "sort
                   )}
                 </div>
               ))}
-              <div className="flex items-center gap-3 rounded-lg bg-soft p-3"><Switch id="f-pub" checked={!!editing.published} onCheckedChange={(v) => set("published", v)} /><Label htmlFor="f-pub">Published (visible on website)</Label></div>
+              <div className="flex items-center gap-3 rounded-lg bg-soft p-3"><Switch id="f-pub" checked={!!editing.published} onCheckedChange={(v) => set("published", v)} /><Label htmlFor="f-pub">{approvalRequired ? "Administrator approved — publish on website" : "Published (visible on website)"}</Label></div>
             </form>
           )}
           <DialogFooter>

@@ -1,7 +1,7 @@
 import { createFileRoute, Link, Outlet, useNavigate } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { FileText, FolderKanban, Inbox, LayoutDashboard, LogOut, Menu, Newspaper, Settings, ExternalLink, ShieldAlert } from "lucide-react";
+import { FileText, FolderKanban, Inbox, LayoutDashboard, LogOut, Menu, Newspaper, Settings, ExternalLink, ShieldAlert, Users, BookOpen } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -28,6 +28,8 @@ const LINKS = [
   { to: "/admin/projects", label: "Projects", icon: FolderKanban },
   { to: "/admin/posts", label: "News", icon: Newspaper },
   { to: "/admin/messages", label: "Messages", icon: Inbox },
+  { to: "/admin/about", label: "About the foundation", icon: BookOpen },
+  { to: "/admin/team", label: "Leadership", icon: Users },
   { to: "/admin/settings", label: "Site settings", icon: Settings },
 ] as const;
 

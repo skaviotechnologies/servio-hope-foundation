@@ -14,3 +14,4 @@
 - All site content (settings, programs, projects, posts, messages) is read/written via the browser Supabase client with RLS; staff access via `has_role`/`is_staff`. Why: CMS editable without code.
 - The `media` storage bucket is private (workspace blocks public buckets); uploads store 10-year signed URLs. Why: public images without a public bucket.
 - First account to sign up becomes admin (DB trigger); later accounts need a role row. Why: bootstrap without manual DB work.
+- About subsections and leadership profiles use dedicated publication-gated CMS records; only admins may modify them, and public queries filter published rows with deterministic display ordering. Why: draft approval must never expose unverified content or identities.
