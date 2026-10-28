@@ -9,6 +9,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import type { Message } from "@/lib/site";
 
 export const Route = createFileRoute("/_authenticated/admin/messages")({
+  head: () => ({ meta: [{ title: "Manage messages — Servio Hope Foundation" }, { name: "description", content: "Review contact, volunteer and partnership enquiries." }, { property: "og:title", content: "Manage messages — Servio Hope Foundation" }, { property: "og:description", content: "Review contact, volunteer and partnership enquiries." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }, { name: "robots", content: "noindex" }] }),
   component: Messages,
 });
 

@@ -16,6 +16,8 @@ export const Route = createFileRoute("/auth")({
       { property: "og:title", content: "Staff Sign In — Servio Hope Foundation" },
       { property: "og:description", content: "Staff access to the website dashboard." },
       { name: "robots", content: "noindex" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: AuthPage,

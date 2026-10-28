@@ -13,6 +13,7 @@ import { settingsQuery, type Settings } from "@/lib/site";
 import { useRoles } from "@/lib/roles";
 
 export const Route = createFileRoute("/_authenticated/admin/settings")({
+  head: () => ({ meta: [{ title: "Site settings — Servio Hope Foundation" }, { name: "description", content: "Manage foundation information and branding." }, { property: "og:title", content: "Site settings — Servio Hope Foundation" }, { property: "og:description", content: "Manage foundation information and branding." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }, { name: "robots", content: "noindex" }] }),
   component: SettingsPage,
 });
 

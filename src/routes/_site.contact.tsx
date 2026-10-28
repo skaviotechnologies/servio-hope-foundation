@@ -12,6 +12,8 @@ export const Route = createFileRoute("/_site/contact")({
       { name: "description", content: "Get in touch with Servio Hope Foundation in Uganda." },
       { property: "og:title", content: "Contact — Servio Hope Foundation" },
       { property: "og:description", content: "Send us a message." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Contact,

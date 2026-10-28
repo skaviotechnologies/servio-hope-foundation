@@ -14,7 +14,7 @@ export function ProgrammePage({ slug }: { slug: string }) {
   if (q.isError) return <div className="container-site py-20"><ErrorState /></div>;
   if (!q.data) return <div className="container-site py-20"><EmptyState title="Programme unavailable" text="This programme is not currently published." /><Link to="/programs" className="mt-6 inline-flex items-center gap-2 text-emerald"><ArrowLeft /> All programmes</Link></div>;
   const { programme: p, projects, stories } = q.data;
-  const metrics = collectionItems(p.impact_metrics).filter((item) => item.value && item["label"]);
+  const metrics = collectionItems(p.impact_metrics).filter((item) => item["value"] && item["label"]);
   const gallery = collectionItems(p.gallery).filter((item) => item["url"]);
   const ctas = validCtas(p.calls_to_action);
   return <article>

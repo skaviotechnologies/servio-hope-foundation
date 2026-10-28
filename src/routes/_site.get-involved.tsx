@@ -13,6 +13,8 @@ export const Route = createFileRoute("/_site/get-involved")({
       { name: "description", content: "Volunteer your time and skills, or partner with Servio Hope Foundation." },
       { property: "og:title", content: "Get Involved — Servio Hope Foundation" },
       { property: "og:description", content: "Volunteer or partner with us." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: GetInvolved,

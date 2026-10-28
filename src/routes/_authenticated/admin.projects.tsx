@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { ContentManager } from "@/components/admin/ContentManager";
 
 export const Route = createFileRoute("/_authenticated/admin/projects")({
+  head: () => ({ meta: [{ title: "Manage projects — Servio Hope Foundation" }, { name: "description", content: "Edit projects and their programme associations." }, { property: "og:title", content: "Manage projects — Servio Hope Foundation" }, { property: "og:description", content: "Edit projects and their programme associations." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }, { name: "robots", content: "noindex" }] }),
   component: ProjectsAdmin,
 });
 
