@@ -25,7 +25,7 @@ export const programsQuery = queryOptions({
   queryKey: ["programs", "public"],
   queryFn: async () => {
     const { data, error } = await supabase
-      .from("programs").select("*").eq("published", true).order("sort_order");
+      .from("programs").select("*").eq("published", true).order("sort_order").order("title");
     if (error) throw error;
     return data;
   },
