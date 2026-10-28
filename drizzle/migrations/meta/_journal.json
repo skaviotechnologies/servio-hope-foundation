@@ -22,6 +22,13 @@
       "when": 1793167370967,
       "tag": "0002_foundation_about_and_leadership",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1793168445389,
+      "tag": "0003_programme_details",
+      "breakpoints": true
     }
   ]
 }
