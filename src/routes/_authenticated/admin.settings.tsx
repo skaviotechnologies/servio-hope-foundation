@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -33,7 +33,7 @@ const SECTIONS: { title: string; fields: { k: K; label: string; type?: "textarea
     { k: "hero_title", label: "Headline" }, { k: "hero_subtitle", label: "Sub-headline", type: "textarea" },
     { k: "hero_image_url", label: "Main photo", type: "image" },
   ]},
-  { title: "About content", fields: [
+  { title: "Homepage mission & introduction", fields: [
     { k: "about_intro", label: "About introduction", type: "textarea" }, { k: "mission", label: "Mission", type: "textarea" },
     { k: "vision", label: "Vision", type: "textarea" }, { k: "values", label: "Values", type: "textarea" },
   ]},
@@ -76,6 +76,7 @@ function SettingsPage() {
         <Button type="submit" disabled={!isAdmin || save.isPending}>{save.isPending ? "Saving…" : "Save changes"}</Button>
       </div>
       {!isAdmin && <p className="mt-4 rounded-lg bg-gold/20 p-3 text-sm">Only administrators can change site settings.</p>}
+      <div className="mt-5 flex flex-wrap gap-3"><Button asChild variant="outline"><Link to="/admin/about">About sections</Link></Button><Button asChild variant="outline"><Link to="/admin/team">Leadership profiles</Link></Button></div>
       <fieldset disabled={!isAdmin} className="mt-6 space-y-6">
         {SECTIONS.map((sec) => (
           <section key={sec.title} className="rounded-2xl border bg-card p-6">
