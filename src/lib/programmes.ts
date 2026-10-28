@@ -15,7 +15,7 @@ export function collectionItems(value: Json | undefined): CollectionItem[] {
 }
 export const ctaTargets = ["/donate", "/get-involved", "/contact"] as const;
 export function validCtas(value: Json | undefined) {
-  return collectionItems(value).filter((item): item is CollectionItem & { target: typeof ctaTargets[number] } => !!item.label?.trim() && ctaTargets.some((target) => target === item.target));
+  return collectionItems(value).filter((item): item is CollectionItem & { target: typeof ctaTargets[number] } => !!item["label"]?.trim() && ctaTargets.some((target) => target === item["target"]));
 }
 export function lines(value: string) { return value.split("\n").map((line) => line.trim()).filter(Boolean); }
 export const programmeDetailQuery = (slug: string) => queryOptions({
