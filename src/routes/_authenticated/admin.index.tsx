@@ -5,6 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export const Route = createFileRoute("/_authenticated/admin/")({
+  head: () => ({ meta: [{ title: "Dashboard overview — Servio Hope Foundation" }, { name: "description", content: "Foundation website activity overview." }, { property: "og:title", content: "Dashboard overview — Servio Hope Foundation" }, { property: "og:description", content: "Foundation website activity overview." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }, { name: "robots", content: "noindex" }] }),
   component: Dashboard,
 });
 

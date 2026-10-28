@@ -13,10 +13,14 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { ImageUpload } from "./ImageUpload";
 import { slugify } from "@/lib/site";
+import { CollectionEditor, type CollectionColumn } from "./CollectionEditor";
+import { collectionItems } from "@/lib/programmes";
 
 export type Field =
   | { name: string; label: string; type: "text" | "textarea" | "longtext" | "number" | "image"; required?: boolean }
-  | { name: string; label: string; type: "select"; options: { value: string; label: string }[] };
+  | { name: string; label: string; type: "select"; options: { value: string; label: string }[] }
+  | { name: string; label: string; type: "collection"; columns: CollectionColumn[]; itemLabel: string }
+  | { name: string; label: string; type: "multiselect"; options: { value: string; label: string }[] };
 
 type Row = { id: string; published: boolean; title: string; slug: string; position?: string; image_url?: string | null; cover_url?: string | null; published_at?: string | null; created_at?: string; updated_at?: string; [k: string]: any };
 
@@ -47,6 +51,7 @@ export function ContentManager({ table, title, singular, fields, orderBy = "sort
   const invalidate = () => {
     qc.invalidateQueries({ queryKey: key });
     qc.invalidateQueries({ queryKey: [table] });
+    if (table === "posts" || table === "projects") qc.invalidateQueries({ queryKey: ["programs", "detail"] });
   };
 
   const save = useMutation({
@@ -141,6 +146,8 @@ export function ContentManager({ table, title, singular, fields, orderBy = "sort
                   {f.type === "textarea" && <Textarea id={`f-${f.name}`} rows={3} value={editing[f.name] ?? ""} onChange={(e) => set(f.name, e.target.value)} />}
                   {f.type === "longtext" && <Textarea id={`f-${f.name}`} rows={10} value={editing[f.name] ?? ""} onChange={(e) => set(f.name, e.target.value)} />}
                   {f.type === "image" && <ImageUpload value={editing[f.name]} onChange={(u) => set(f.name, u)} label={f.label} />}
+                  {f.type === "collection" && <CollectionEditor value={collectionItems(editing[f.name])} onChange={(items) => set(f.name, items)} columns={f.columns} label={f.itemLabel} />}
+                  {f.type === "multiselect" && <div className="max-h-48 space-y-2 overflow-y-auto rounded-md border p-3">{f.options.length ? f.options.map((option) => <label key={option.value} className="flex items-center gap-2 text-sm"><input type="checkbox" checked={(editing[f.name] ?? []).includes(option.value)} onChange={(e) => set(f.name, e.target.checked ? [...(editing[f.name] ?? []), option.value] : (editing[f.name] ?? []).filter((id: string) => id !== option.value))} />{option.label}</label>) : <p className="text-sm text-muted-foreground">No stories available.</p>}</div>}
                   {f.type === "select" && (
                     <select id={`f-${f.name}`} className="h-9 w-full rounded-md border border-input bg-background px-3 text-sm" value={editing[f.name] ?? ""} onChange={(e) => set(f.name, e.target.value || null)}>
                       {f.options.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}

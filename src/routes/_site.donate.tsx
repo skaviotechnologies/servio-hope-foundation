@@ -13,6 +13,8 @@ export const Route = createFileRoute("/_site/donate")({
       { name: "description", content: "Support Servio Hope Foundation's work in education, healthcare, youth empowerment and community development." },
       { property: "og:title", content: "Donate — Servio Hope Foundation" },
       { property: "og:description", content: "Help us serve communities in Uganda." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Donate,

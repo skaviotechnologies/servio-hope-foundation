@@ -12,6 +12,8 @@ export const Route = createFileRoute("/_site/news/")({
       { name: "description", content: "News, stories and updates from Servio Hope Foundation." },
       { property: "og:title", content: "News — Servio Hope Foundation" },
       { property: "og:description", content: "Stories and updates from our work." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: () => {

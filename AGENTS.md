@@ -10,6 +10,7 @@
 <!-- LOVABLE:END -->
 
 ## Project rules
+- Programme detail collections are stored on programme records and edited through the shared collection editor; projects link by programme ID and stories by selected IDs with public publication filters. Why: additional programme categories need no code changes and drafts never leak into related content.
 - Public pages live under the `_site` pathless layout; admin pages under `_authenticated/admin*`. Why: shared header/footer vs. separate dashboard shell.
 - All site content (settings, programs, projects, posts, messages) is read/written via the browser Supabase client with RLS; staff access via `has_role`/`is_staff`. Why: CMS editable without code.
 - The `media` storage bucket is private (workspace blocks public buckets); uploads store 10-year signed URLs. Why: public images without a public bucket.

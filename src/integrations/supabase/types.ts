@@ -127,11 +127,17 @@ export type Database = {
       }
       programs: {
         Row: {
+          activities: string
           body: string
+          calls_to_action: Json
           created_at: string
+          gallery: Json
           id: string
           image_url: string | null
+          impact_metrics: Json
+          objectives: string
           published: boolean
+          related_story_ids: string[]
           slug: string
           sort_order: number
           summary: string
@@ -139,11 +145,17 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          activities?: string
           body?: string
+          calls_to_action?: Json
           created_at?: string
+          gallery?: Json
           id?: string
           image_url?: string | null
+          impact_metrics?: Json
+          objectives?: string
           published?: boolean
+          related_story_ids?: string[]
           slug: string
           sort_order?: number
           summary?: string
@@ -151,11 +163,17 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          activities?: string
           body?: string
+          calls_to_action?: Json
           created_at?: string
+          gallery?: Json
           id?: string
           image_url?: string | null
+          impact_metrics?: Json
+          objectives?: string
           published?: boolean
+          related_story_ids?: string[]
           slug?: string
           sort_order?: number
           summary?: string

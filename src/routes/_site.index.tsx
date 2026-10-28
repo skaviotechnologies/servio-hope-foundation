@@ -16,6 +16,8 @@ export const Route = createFileRoute("/_site/")({
       { name: "description", content: "A Ugandan humanitarian foundation working in education, healthcare, youth empowerment and community development." },
       { property: "og:title", content: "Servio Hope Foundation — Serving Humanity. Inspiring Hope." },
       { property: "og:description", content: "Education, healthcare, youth empowerment and community development in Uganda and beyond." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Home,

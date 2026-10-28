@@ -12,6 +12,8 @@ export const Route = createFileRoute("/_site/projects/$slug")({
       { name: "description", content: "Project details from Servio Hope Foundation." },
       { property: "og:title", content: "Project — Servio Hope Foundation" },
       { property: "og:description", content: "Learn about this project." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: () => {
