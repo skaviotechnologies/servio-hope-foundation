@@ -20,11 +20,13 @@ import { Route as SiteContactRouteImport } from './routes/_site.contact'
 import { Route as SiteDonateRouteImport } from './routes/_site.donate'
 import { Route as SiteGetInvolvedRouteImport } from './routes/_site.get-involved'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
+import { Route as AuthenticatedAdminAboutRouteImport } from './routes/_authenticated/admin.about'
 import { Route as AuthenticatedAdminMessagesRouteImport } from './routes/_authenticated/admin.messages'
 import { Route as AuthenticatedAdminPostsRouteImport } from './routes/_authenticated/admin.posts'
 import { Route as AuthenticatedAdminProgramsRouteImport } from './routes/_authenticated/admin.programs'
 import { Route as AuthenticatedAdminProjectsRouteImport } from './routes/_authenticated/admin.projects'
 import { Route as AuthenticatedAdminSettingsRouteImport } from './routes/_authenticated/admin.settings'
+import { Route as AuthenticatedAdminTeamRouteImport } from './routes/_authenticated/admin.team'
 import { Route as SiteNewsIndexRouteImport } from './routes/_site.news.index'
 import { Route as SiteNewsSlugRouteImport } from './routes/_site.news.$slug'
 import { Route as SiteProgramsIndexRouteImport } from './routes/_site.programs.index'
@@ -85,6 +87,11 @@ const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AuthenticatedAdminRoute,
 } as any)
+const AuthenticatedAdminAboutRoute = AuthenticatedAdminAboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => AuthenticatedAdminRoute,
+} as any)
 const AuthenticatedAdminMessagesRoute =
   AuthenticatedAdminMessagesRouteImport.update({
     id: '/messages',
@@ -114,6 +121,11 @@ const AuthenticatedAdminSettingsRoute =
     path: '/settings',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
+const AuthenticatedAdminTeamRoute = AuthenticatedAdminTeamRouteImport.update({
+  id: '/team',
+  path: '/team',
+  getParentRoute: () => AuthenticatedAdminRoute,
+} as any)
 const SiteNewsIndexRoute = SiteNewsIndexRouteImport.update({
   id: '/news/',
   path: '/news/',
@@ -154,11 +166,13 @@ export interface FileRoutesByFullPath {
   '/contact': typeof SiteContactRoute
   '/donate': typeof SiteDonateRoute
   '/get-involved': typeof SiteGetInvolvedRoute
+  '/admin/about': typeof AuthenticatedAdminAboutRoute
   '/admin/messages': typeof AuthenticatedAdminMessagesRoute
   '/admin/posts': typeof AuthenticatedAdminPostsRoute
   '/admin/programs': typeof AuthenticatedAdminProgramsRoute
   '/admin/projects': typeof AuthenticatedAdminProjectsRoute
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
+  '/admin/team': typeof AuthenticatedAdminTeamRoute
   '/news/$slug': typeof SiteNewsSlugRoute
   '/programs/$slug': typeof SiteProgramsSlugRoute
   '/projects/$slug': typeof SiteProjectsSlugRoute
@@ -175,11 +189,13 @@ export interface FileRoutesByTo {
   '/contact': typeof SiteContactRoute
   '/donate': typeof SiteDonateRoute
   '/get-involved': typeof SiteGetInvolvedRoute
+  '/admin/about': typeof AuthenticatedAdminAboutRoute
   '/admin/messages': typeof AuthenticatedAdminMessagesRoute
   '/admin/posts': typeof AuthenticatedAdminPostsRoute
   '/admin/programs': typeof AuthenticatedAdminProgramsRoute
   '/admin/projects': typeof AuthenticatedAdminProjectsRoute
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
+  '/admin/team': typeof AuthenticatedAdminTeamRoute
   '/news/$slug': typeof SiteNewsSlugRoute
   '/programs/$slug': typeof SiteProgramsSlugRoute
   '/projects/$slug': typeof SiteProjectsSlugRoute
@@ -200,11 +216,13 @@ export interface FileRoutesById {
   '/_site/donate': typeof SiteDonateRoute
   '/_site/get-involved': typeof SiteGetInvolvedRoute
   '/_site/': typeof SiteIndexRoute
+  '/_authenticated/admin/about': typeof AuthenticatedAdminAboutRoute
   '/_authenticated/admin/messages': typeof AuthenticatedAdminMessagesRoute
   '/_authenticated/admin/posts': typeof AuthenticatedAdminPostsRoute
   '/_authenticated/admin/programs': typeof AuthenticatedAdminProgramsRoute
   '/_authenticated/admin/projects': typeof AuthenticatedAdminProjectsRoute
   '/_authenticated/admin/settings': typeof AuthenticatedAdminSettingsRoute
+  '/_authenticated/admin/team': typeof AuthenticatedAdminTeamRoute
   '/_site/news/$slug': typeof SiteNewsSlugRoute
   '/_site/programs/$slug': typeof SiteProgramsSlugRoute
   '/_site/projects/$slug': typeof SiteProjectsSlugRoute
@@ -224,11 +242,13 @@ export interface FileRouteTypes {
     | '/contact'
     | '/donate'
     | '/get-involved'
+    | '/admin/about'
     | '/admin/messages'
     | '/admin/posts'
     | '/admin/programs'
     | '/admin/projects'
     | '/admin/settings'
+    | '/admin/team'
     | '/news/$slug'
     | '/programs/$slug'
     | '/projects/$slug'
@@ -245,11 +265,13 @@ export interface FileRouteTypes {
     | '/contact'
     | '/donate'
     | '/get-involved'
+    | '/admin/about'
     | '/admin/messages'
     | '/admin/posts'
     | '/admin/programs'
     | '/admin/projects'
     | '/admin/settings'
+    | '/admin/team'
     | '/news/$slug'
     | '/programs/$slug'
     | '/projects/$slug'
@@ -269,11 +291,13 @@ export interface FileRouteTypes {
     | '/_site/donate'
     | '/_site/get-involved'
     | '/_site/'
+    | '/_authenticated/admin/about'
     | '/_authenticated/admin/messages'
     | '/_authenticated/admin/posts'
     | '/_authenticated/admin/programs'
     | '/_authenticated/admin/projects'
     | '/_authenticated/admin/settings'
+    | '/_authenticated/admin/team'
     | '/_site/news/$slug'
     | '/_site/programs/$slug'
     | '/_site/projects/$slug'
@@ -369,6 +393,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/about': {
+      id: '/_authenticated/admin/about'
+      path: '/about'
+      fullPath: '/admin/about'
+      preLoaderRoute: typeof AuthenticatedAdminAboutRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/admin/messages': {
       id: '/_authenticated/admin/messages'
       path: '/messages'
@@ -402,6 +433,13 @@ declare module '@tanstack/react-router' {
       path: '/settings'
       fullPath: '/admin/settings'
       preLoaderRoute: typeof AuthenticatedAdminSettingsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/team': {
+      id: '/_authenticated/admin/team'
+      path: '/team'
+      fullPath: '/admin/team'
+      preLoaderRoute: typeof AuthenticatedAdminTeamRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
     '/_site/news/': {
@@ -450,20 +488,24 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedAdminRouteChildren {
+  AuthenticatedAdminAboutRoute: typeof AuthenticatedAdminAboutRoute
   AuthenticatedAdminMessagesRoute: typeof AuthenticatedAdminMessagesRoute
   AuthenticatedAdminPostsRoute: typeof AuthenticatedAdminPostsRoute
   AuthenticatedAdminProgramsRoute: typeof AuthenticatedAdminProgramsRoute
   AuthenticatedAdminProjectsRoute: typeof AuthenticatedAdminProjectsRoute
   AuthenticatedAdminSettingsRoute: typeof AuthenticatedAdminSettingsRoute
+  AuthenticatedAdminTeamRoute: typeof AuthenticatedAdminTeamRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
 }
 
 const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
+  AuthenticatedAdminAboutRoute: AuthenticatedAdminAboutRoute,
   AuthenticatedAdminMessagesRoute: AuthenticatedAdminMessagesRoute,
   AuthenticatedAdminPostsRoute: AuthenticatedAdminPostsRoute,
   AuthenticatedAdminProgramsRoute: AuthenticatedAdminProgramsRoute,
   AuthenticatedAdminProjectsRoute: AuthenticatedAdminProjectsRoute,
   AuthenticatedAdminSettingsRoute: AuthenticatedAdminSettingsRoute,
+  AuthenticatedAdminTeamRoute: AuthenticatedAdminTeamRoute,
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
 }
 
