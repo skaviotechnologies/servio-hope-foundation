@@ -16,3 +16,4 @@
 - The `media` storage bucket is private (workspace blocks public buckets); uploads store 10-year signed URLs. Why: public images without a public bucket.
 - First account to sign up becomes admin (DB trigger); later accounts need a role row. Why: bootstrap without manual DB work.
 - About subsections and leadership profiles use dedicated publication-gated CMS records; only admins may modify them, and public queries filter published rows with deterministic display ordering. Why: draft approval must never expose unverified content or identities.
+- AI features run in server functions (`*.functions.ts` + `*.server.ts`) via the AI Gateway and ground answers only in published CMS records. Why: keeps keys server-side and prevents invented claims.
