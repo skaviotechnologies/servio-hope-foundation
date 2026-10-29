@@ -2,7 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
 export const recommendProgrammes = createServerFn({ method: "POST" })
-  .inputValidator((d) => z.object({ causes: z.string().trim().min(5).max(1000) }).parse(d))
+  .validator((d) => z.object({ causes: z.string().trim().min(5).max(1000) }).parse(d))
   .handler(async ({ data }) => {
     const { matchCauses } = await import("./cause-match.server");
     try {
