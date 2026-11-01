@@ -6,7 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import type { ProjectFinance } from '@/lib/projects';
 
-export function ProjectFinanceEditor({ id, value, onChange }: { id?: string; value?: Partial<ProjectFinance>; onChange: (value: Partial<ProjectFinance>) => void }) {
+export function ProjectFinanceEditor({ id, value, onChange }: { id?: string | undefined; value?: Partial<ProjectFinance> | undefined; onChange: (value: Partial<ProjectFinance>) => void }) {
   const q = useQuery({ queryKey: ['admin', 'project-finance', id], enabled: !!id, queryFn: async () => {
     const { data, error } = await supabase.from('project_finances').select('*').eq('project_id', id ?? '').maybeSingle();
     if (error) throw error;

@@ -4,7 +4,7 @@ import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/integrations/supabase/client';
 
-export function DocumentUpload({ value, onChange, label }: { value?: string | null; onChange: (url: string) => void; label: string }) {
+export function DocumentUpload({ value, onChange, label }: { value?: string | null | undefined; onChange: (url: string) => void; label: string }) {
   const ref = useRef<HTMLInputElement>(null);
   const [busy, setBusy] = useState(false);
   async function upload(file?: File) {
