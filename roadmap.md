@@ -8,3 +8,8 @@
 - [x] Add editable objectives, activities, impact metrics, galleries, related stories and calls to action.
 - [x] Expand the four existing published programmes without changing publication status; add dedicated presentations with linked projects.
 - [x] Verify new category creation, image upload, metric/gallery read-back, publishing/unpublishing, linked projects/stories and phone layout; remove temporary records.
+
+# Phase 5: Project management
+- [ ] Add complete project fields, archive controls and secure public disclosure.
+- [ ] Add administrator editing, document uploads and public detail/sharing layouts.
+- [ ] Verify disclosure rules, administration and public read-back; remove temporary records.

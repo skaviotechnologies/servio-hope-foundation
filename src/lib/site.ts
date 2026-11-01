@@ -35,7 +35,7 @@ export const projectsQuery = queryOptions({
   queryKey: ["projects", "public"],
   queryFn: async () => {
     const { data, error } = await supabase
-      .from("projects").select("*").eq("published", true).order("sort_order");
+      .from("projects").select("*").eq("published", true).eq("archived", false).order("sort_order").order("title");
     if (error) throw error;
     return data;
   },
@@ -56,7 +56,10 @@ export const bySlug = <T extends "programs" | "projects" | "posts">(table: T, sl
   queryOptions({
     queryKey: [table, "slug", slug],
     queryFn: async () => {
-      const { data, error } = await supabase.from(table as "programs").select("*").eq("slug", slug).eq("published", true).maybeSingle();
+      const result = table === "projects"
+        ? await supabase.from("projects").select("*").eq("slug", slug).eq("published", true).eq("archived", false).maybeSingle()
+        : await supabase.from(table).select("*").eq("slug", slug).eq("published", true).maybeSingle();
+      const { data, error } = result;
       if (error) throw error;
       return data as Database["public"]["Tables"][T]["Row"] | null;
     },
@@ -68,6 +71,10 @@ export function slugify(s: string) {
 
 export const statusLabel: Record<string, string> = {
   planned: "Planned",
-  ongoing: "Ongoing",
+  ongoing: "Active",
+  upcoming: "Upcoming",
+  active: "Active",
+  on_hold: "On Hold",
+  cancelled: "Cancelled",
   completed: "Completed",
 };
