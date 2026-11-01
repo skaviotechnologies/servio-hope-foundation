@@ -17,3 +17,5 @@
 - First account to sign up becomes admin (DB trigger); later accounts need a role row. Why: bootstrap without manual DB work.
 - About subsections and leadership profiles use dedicated publication-gated CMS records; only admins may modify them, and public queries filter published rows with deterministic display ordering. Why: draft approval must never expose unverified content or identities.
 - AI features run in server functions (`*.functions.ts` + `*.server.ts`) via the AI Gateway and ground answers only in published CMS records. Why: keeps keys server-side and prevents invented claims.
+- Project financial source records are staff-only; public reads use the masked public_project_finances view and published, unarchived project queries. Why: undisclosed budgets and unverified achievements must never reach public clients, including related-project listings.
+- Project supporting documents use PDF uploads in the existing private media bucket and explicit external HTTPS links. Why: reuses staff-only storage permissions and avoids executable document uploads.
