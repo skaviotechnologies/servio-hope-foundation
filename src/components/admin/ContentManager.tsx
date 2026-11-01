@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { Eye, EyeOff, Pencil, Plus, Trash2 } from "lucide-react";
+import { Archive, ArchiveRestore, Eye, EyeOff, Pencil, Plus, Trash2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -15,9 +15,11 @@ import { ImageUpload } from "./ImageUpload";
 import { slugify } from "@/lib/site";
 import { CollectionEditor, type CollectionColumn } from "./CollectionEditor";
 import { collectionItems } from "@/lib/programmes";
+import { ProjectFinanceEditor } from "./ProjectFinanceEditor";
+import { validateFinance, validateProjectDates } from "@/lib/projects";
 
 export type Field =
-  | { name: string; label: string; type: "text" | "textarea" | "longtext" | "number" | "image"; required?: boolean }
+  | { name: string; label: string; type: "text" | "textarea" | "longtext" | "number" | "image" | "date"; required?: boolean }
   | { name: string; label: string; type: "select"; options: { value: string; label: string }[] }
   | { name: string; label: string; type: "collection"; columns: CollectionColumn[]; itemLabel: string }
   | { name: string; label: string; type: "multiselect"; options: { value: string; label: string }[] };
@@ -52,20 +54,34 @@ export function ContentManager({ table, title, singular, fields, orderBy = "sort
     qc.invalidateQueries({ queryKey: key });
     qc.invalidateQueries({ queryKey: [table] });
     if (table === "posts" || table === "projects") qc.invalidateQueries({ queryKey: ["programs", "detail"] });
+    if (table === "projects") qc.invalidateQueries({ queryKey: ["admin", "project-finance"] });
   };
 
   const save = useMutation({
     mutationFn: async (row: Partial<Row>) => {
       const payload: any = { ...row };
+      const finance = payload.finance;
+      delete payload.finance;
+      if (table === "projects") {
+        validateProjectDates(payload.start_date, payload.end_date);
+        if (!finance) throw new Error("Wait for financial records to load before saving.");
+        validateFinance(finance);
+        if (payload.archived) payload.published = false;
+      }
       payload.slug = slugify(payload.slug || payload.title || "");
       if (!payload.title?.trim()) throw new Error("Title is required");
       if (!payload.slug) throw new Error("Slug is required");
       if (table === "posts" && payload.published && !payload.published_at) payload.published_at = new Date().toISOString();
       delete payload.created_at; delete payload.updated_at;
-      const { error } = payload.id
-        ? await supabase.from(table).update(payload as never).eq("id", payload.id)
-        : await supabase.from(table).insert(payload as never);
+      const { data: saved, error } = payload.id
+        ? await supabase.from(table).update(payload as never).eq("id", payload.id).select("id").single()
+        : await supabase.from(table).insert(payload as never).select("id").single();
       if (error) throw new Error(error.code === "23505" ? "That slug is already in use." : error.message);
+      if (table === "projects" && saved) {
+        setEditing(previous => previous ? { ...previous, id: saved.id } : previous);
+        const result = await supabase.from("project_finances").upsert({ ...finance, project_id: saved.id });
+        if (result.error) throw new Error(`Project saved, but financial records were not saved: ${result.error.message}. Please retry.`);
+      }
     },
     onSuccess: () => { toast.success("Saved"); setEditing(null); invalidate(); },
     onError: (e: Error) => toast.error(e.message),
@@ -91,13 +107,22 @@ export function ContentManager({ table, title, singular, fields, orderBy = "sort
     onError: (e: Error) => toast.error(e.message),
   });
 
+  const archive = useMutation({
+    mutationFn: async (r: Row) => {
+      const { error } = await supabase.from("projects").update({ archived: !r.archived, published: false }).eq("id", r.id);
+      if (error) throw error;
+    },
+    onSuccess: invalidate,
+    onError: (error: Error) => toast.error(error.message),
+  });
+
   const set = (k: string, v: any) => setEditing((e) => ({ ...e, [k]: v }));
 
   return (
     <div>
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div><h1 className="text-3xl font-extrabold text-navy">{title}</h1><p className="text-muted-foreground">Create, edit, publish or remove {title.toLowerCase()}.</p></div>
-        <Button onClick={() => setEditing({ published: false, ...defaults })}><Plus /> New {singular}</Button>
+        <Button onClick={() => setEditing({ published: false, ...defaults, ...(table === "projects" ? { finance: { currency: "UGX" } } : {}) })}><Plus /> New {singular}</Button>
       </div>
 
       {approvalRequired && <p role="note" className="mt-5 border-l-4 border-gold bg-gold/10 p-4 text-sm text-ink">Draft content — administrator approval required. Review and verify each item before approving publication. Unpublished drafts are not visible on the website.</p>}
@@ -120,8 +145,9 @@ export function ContentManager({ table, title, singular, fields, orderBy = "sort
                     <p className="truncate font-semibold text-navy">{r.title}</p>
                     <p className="truncate text-xs text-muted-foreground">{table === "team_members" ? r.position : `${publicPath}${table === "about_sections" ? "#" : "/"}${r.slug}`}</p>
                   </div>
-                  <span className={`hidden rounded-full px-2.5 py-1 text-xs font-semibold sm:inline ${r.published ? "bg-emerald text-secondary-foreground" : "bg-muted text-muted-foreground"}`}>{r.published ? "Published" : "Draft"}</span>
-                  <Button variant="ghost" size="icon" disabled={toggle.isPending} aria-label={r.published ? "Unpublish" : approvalRequired ? "Approve and publish" : "Publish"} title={r.published ? "Unpublish" : approvalRequired ? "Approve and publish" : "Publish"} onClick={() => toggle.mutate(r)}>{r.published ? <EyeOff /> : <Eye />}</Button>
+                  <span className={`hidden rounded-full px-2.5 py-1 text-xs font-semibold sm:inline ${r.published ? "bg-emerald text-secondary-foreground" : "bg-muted text-muted-foreground"}`}>{r.archived ? "Archived" : r.published ? "Published" : "Draft"}</span>
+                  {table === "projects" && <Button variant="ghost" size="icon" disabled={archive.isPending} aria-label={r.archived ? "Restore project" : "Archive project"} title={r.archived ? "Restore project" : "Archive project"} onClick={() => archive.mutate(r)}>{r.archived ? <ArchiveRestore /> : <Archive />}</Button>}
+                  <Button variant="ghost" size="icon" disabled={toggle.isPending || !!r.archived} aria-label={r.published ? "Unpublish" : approvalRequired ? "Approve and publish" : "Publish"} title={r.published ? "Unpublish" : approvalRequired ? "Approve and publish" : "Publish"} onClick={() => toggle.mutate(r)}>{r.published ? <EyeOff /> : <Eye />}</Button>
                   <Button variant="ghost" size="icon" aria-label="Edit" onClick={() => setEditing(r)}><Pencil /></Button>
                   <Button variant="ghost" size="icon" aria-label="Delete" onClick={() => setDeleting(r)}><Trash2 className="text-destructive" /></Button>
                 </li>
@@ -142,6 +168,7 @@ export function ContentManager({ table, title, singular, fields, orderBy = "sort
                 <div key={f.name} className="space-y-1.5">
                   <Label htmlFor={`f-${f.name}`}>{f.label}</Label>
                   {f.type === "text" && <Input id={`f-${f.name}`} value={editing[f.name] ?? ""} onChange={(e) => set(f.name, e.target.value)} />}
+                  {f.type === "date" && <Input id={`f-${f.name}`} type="date" value={editing[f.name] ?? ""} onChange={e => set(f.name, e.target.value || null)} />}
                   {f.type === "number" && <Input id={`f-${f.name}`} type="number" value={editing[f.name] ?? 0} onChange={(e) => set(f.name, Number(e.target.value))} />}
                   {f.type === "textarea" && <Textarea id={`f-${f.name}`} rows={3} value={editing[f.name] ?? ""} onChange={(e) => set(f.name, e.target.value)} />}
                   {f.type === "longtext" && <Textarea id={`f-${f.name}`} rows={10} value={editing[f.name] ?? ""} onChange={(e) => set(f.name, e.target.value)} />}
@@ -155,7 +182,8 @@ export function ContentManager({ table, title, singular, fields, orderBy = "sort
                   )}
                 </div>
               ))}
-              <div className="flex items-center gap-3 rounded-lg bg-soft p-3"><Switch id="f-pub" checked={!!editing.published} onCheckedChange={(v) => set("published", v)} /><Label htmlFor="f-pub">{approvalRequired ? "Administrator approved — publish on website" : "Published (visible on website)"}</Label></div>
+              {table === "projects" && <ProjectFinanceEditor id={editing.id} value={editing.finance} onChange={value => set("finance", value)} />}
+              <div className="flex items-center gap-3 rounded-lg bg-soft p-3"><Switch id="f-pub" disabled={!!editing.archived} checked={!!editing.published} onCheckedChange={(v) => set("published", v)} /><Label htmlFor="f-pub">{editing.archived ? "Archived — restore before publishing" : approvalRequired ? "Administrator approved — publish on website" : "Published (visible on website)"}</Label></div>
             </form>
           )}
           <DialogFooter>
