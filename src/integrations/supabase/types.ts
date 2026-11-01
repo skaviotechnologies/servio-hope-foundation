@@ -182,49 +182,126 @@ export type Database = {
         }
         Relationships: []
       }
+      project_finances: {
+        Row: {
+          beneficiaries_reached: number | null
+          beneficiaries_verified: boolean
+          budget: number | null
+          budget_approved: boolean
+          currency: string
+          funding_received: number | null
+          funding_target: number | null
+          funding_verified: boolean
+          project_id: string
+        }
+        Insert: {
+          beneficiaries_reached?: number | null
+          beneficiaries_verified?: boolean
+          budget?: number | null
+          budget_approved?: boolean
+          currency?: string
+          funding_received?: number | null
+          funding_target?: number | null
+          funding_verified?: boolean
+          project_id: string
+        }
+        Update: {
+          beneficiaries_reached?: number | null
+          beneficiaries_verified?: boolean
+          budget?: number | null
+          budget_approved?: boolean
+          currency?: string
+          funding_received?: number | null
+          funding_target?: number | null
+          funding_verified?: boolean
+          project_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_finances_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: true
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       projects: {
         Row: {
+          archived: boolean
           body: string
+          country: string | null
           created_at: string
+          district: string | null
+          end_date: string | null
+          gallery: Json
           id: string
           image_url: string | null
           location: string | null
+          objectives: string
           program_id: string | null
+          progress_updates: Json
+          project_manager: string | null
           published: boolean
+          related_campaigns: Json
           slug: string
           sort_order: number
+          start_date: string | null
           status: string
           summary: string
+          supporting_documents: Json
           title: string
           updated_at: string
         }
         Insert: {
+          archived?: boolean
           body?: string
+          country?: string | null
           created_at?: string
+          district?: string | null
+          end_date?: string | null
+          gallery?: Json
           id?: string
           image_url?: string | null
           location?: string | null
+          objectives?: string
           program_id?: string | null
+          progress_updates?: Json
+          project_manager?: string | null
           published?: boolean
+          related_campaigns?: Json
           slug: string
           sort_order?: number
+          start_date?: string | null
           status?: string
           summary?: string
+          supporting_documents?: Json
           title: string
           updated_at?: string
         }
         Update: {
+          archived?: boolean
           body?: string
+          country?: string | null
           created_at?: string
+          district?: string | null
+          end_date?: string | null
+          gallery?: Json
           id?: string
           image_url?: string | null
           location?: string | null
+          objectives?: string
           program_id?: string | null
+          progress_updates?: Json
+          project_manager?: string | null
           published?: boolean
+          related_campaigns?: Json
           slug?: string
           sort_order?: number
+          start_date?: string | null
           status?: string
           summary?: string
+          supporting_documents?: Json
           title?: string
           updated_at?: string
         }
@@ -402,7 +479,25 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      public_project_finances: {
+        Row: {
+          beneficiaries_reached: number | null
+          budget: number | null
+          currency: string | null
+          funding_received: number | null
+          funding_target: number | null
+          project_id: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_finances_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: true
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Functions: {
       has_role: {

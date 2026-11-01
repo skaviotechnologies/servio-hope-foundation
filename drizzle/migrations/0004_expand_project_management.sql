@@ -1,0 +1,16 @@
+ALTER TABLE public.projects ADD COLUMN objectives text NOT NULL DEFAULT '', ADD COLUMN district text, ADD COLUMN country text, ADD COLUMN start_date date, ADD COLUMN end_date date, ADD COLUMN project_manager text, ADD COLUMN archived boolean NOT NULL DEFAULT false, ADD COLUMN gallery jsonb NOT NULL DEFAULT '[]', ADD COLUMN progress_updates jsonb NOT NULL DEFAULT '[]', ADD COLUMN related_campaigns jsonb NOT NULL DEFAULT '[]', ADD COLUMN supporting_documents jsonb NOT NULL DEFAULT '[]';
+ALTER TABLE public.projects DROP CONSTRAINT projects_status_check;
+UPDATE public.projects SET status = 'active' WHERE status = 'ongoing';
+ALTER TABLE public.projects ADD CONSTRAINT projects_status_valid CHECK (status IN ('planned','upcoming','active','on_hold','completed','cancelled'));
+ALTER TABLE public.projects ADD CONSTRAINT project_dates_valid CHECK (end_date IS NULL OR start_date IS NULL OR end_date >= start_date);
+DROP POLICY "public read published" ON public.projects;
+CREATE POLICY "public read published" ON public.projects FOR SELECT TO anon, authenticated USING ((published AND NOT archived) OR public.is_staff(auth.uid()));
+CREATE TABLE public.project_finances (project_id uuid PRIMARY KEY REFERENCES public.projects(id) ON DELETE CASCADE, currency text NOT NULL DEFAULT 'UGX', budget numeric, budget_approved boolean NOT NULL DEFAULT false, funding_target numeric, funding_received numeric, funding_verified boolean NOT NULL DEFAULT false, beneficiaries_reached integer, beneficiaries_verified boolean NOT NULL DEFAULT false, CONSTRAINT project_amounts_nonnegative CHECK ((budget IS NULL OR budget >= 0) AND (funding_target IS NULL OR funding_target >= 0) AND (funding_received IS NULL OR funding_received >= 0) AND (beneficiaries_reached IS NULL OR beneficiaries_reached >= 0)), CONSTRAINT project_currency_valid CHECK (currency ~ '^[A-Z]{3}$'));
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.project_finances TO authenticated;
+GRANT ALL ON public.project_finances TO service_role;
+ALTER TABLE public.project_finances ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "staff manage project finances" ON public.project_finances FOR ALL TO authenticated USING (public.is_staff(auth.uid())) WITH CHECK (public.is_staff(auth.uid()));
+CREATE VIEW public.public_project_finances WITH (security_barrier = true) AS SELECT f.project_id, f.currency, CASE WHEN f.budget_approved THEN f.budget ELSE NULL END AS budget, f.funding_target, CASE WHEN f.funding_verified THEN f.funding_received ELSE NULL END AS funding_received, CASE WHEN f.beneficiaries_verified THEN f.beneficiaries_reached ELSE NULL END AS beneficiaries_reached FROM public.project_finances f JOIN public.projects p ON p.id=f.project_id WHERE p.published AND NOT p.archived;
+GRANT SELECT ON public.public_project_finances TO anon, authenticated;
+GRANT ALL ON public.public_project_finances TO service_role;
+COMMENT ON VIEW public.public_project_finances IS 'Intentional owner-rights projection: only published, unarchived projects; budget and achieved figures are masked unless approved or verified. Private source remains staff-only.';
