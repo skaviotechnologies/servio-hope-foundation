@@ -10,6 +10,6 @@
 - [x] Verify new category creation, image upload, metric/gallery read-back, publishing/unpublishing, linked projects/stories and phone layout; remove temporary records.
 
 # Phase 5: Project management
-- [ ] Add complete project fields, archive controls and secure public disclosure.
-- [ ] Add administrator editing, document uploads and public detail/sharing layouts.
-- [ ] Verify disclosure rules, administration and public read-back; remove temporary records.
+- [x] Add complete project fields, archive controls and secure public disclosure.
+- [x] Add administrator editing, document uploads and public detail/sharing layouts.
+- [x] Verify disclosure rules, administration and public read-back; remove temporary records and uploaded verification media.

@@ -24,7 +24,7 @@ export type Field =
   | { name: string; label: string; type: "collection"; columns: CollectionColumn[]; itemLabel: string }
   | { name: string; label: string; type: "multiselect"; options: { value: string; label: string }[] };
 
-type Row = { id: string; published: boolean; title: string; slug: string; archived?: boolean; finance?: import("@/lib/projects").ProjectFinance; position?: string; image_url?: string | null; cover_url?: string | null; published_at?: string | null; created_at?: string; updated_at?: string; [k: string]: any };
+type Row = { id: string; published: boolean; title: string; slug: string; archived?: boolean; finance?: Partial<import("@/lib/projects").ProjectFinance>; position?: string; image_url?: string | null; cover_url?: string | null; published_at?: string | null; created_at?: string; updated_at?: string; [k: string]: any };
 
 export function ContentManager({ table, title, singular, fields, orderBy = "sort_order", defaults = {}, publicPath, nameLabel = "Title", approvalRequired = false }: {
   table: "programs" | "projects" | "posts" | "about_sections" | "team_members";
