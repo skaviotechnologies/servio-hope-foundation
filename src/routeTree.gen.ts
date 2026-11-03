@@ -21,6 +21,7 @@ import { Route as SiteDonateRouteImport } from './routes/_site.donate'
 import { Route as SiteGetInvolvedRouteImport } from './routes/_site.get-involved'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
 import { Route as AuthenticatedAdminAboutRouteImport } from './routes/_authenticated/admin.about'
+import { Route as AuthenticatedAdminCampaignsRouteImport } from './routes/_authenticated/admin.campaigns'
 import { Route as AuthenticatedAdminMessagesRouteImport } from './routes/_authenticated/admin.messages'
 import { Route as AuthenticatedAdminPostsRouteImport } from './routes/_authenticated/admin.posts'
 import { Route as AuthenticatedAdminProgramsRouteImport } from './routes/_authenticated/admin.programs'
@@ -94,6 +95,12 @@ const AuthenticatedAdminAboutRoute = AuthenticatedAdminAboutRouteImport.update({
   path: '/about',
   getParentRoute: () => AuthenticatedAdminRoute,
 } as any)
+const AuthenticatedAdminCampaignsRoute =
+  AuthenticatedAdminCampaignsRouteImport.update({
+    id: '/campaigns',
+    path: '/campaigns',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 const AuthenticatedAdminMessagesRoute =
   AuthenticatedAdminMessagesRouteImport.update({
     id: '/messages',
@@ -179,6 +186,7 @@ export interface FileRoutesByFullPath {
   '/donate': typeof SiteDonateRoute
   '/get-involved': typeof SiteGetInvolvedRoute
   '/admin/about': typeof AuthenticatedAdminAboutRoute
+  '/admin/campaigns': typeof AuthenticatedAdminCampaignsRoute
   '/admin/messages': typeof AuthenticatedAdminMessagesRoute
   '/admin/posts': typeof AuthenticatedAdminPostsRoute
   '/admin/programs': typeof AuthenticatedAdminProgramsRoute
@@ -204,6 +212,7 @@ export interface FileRoutesByTo {
   '/donate': typeof SiteDonateRoute
   '/get-involved': typeof SiteGetInvolvedRoute
   '/admin/about': typeof AuthenticatedAdminAboutRoute
+  '/admin/campaigns': typeof AuthenticatedAdminCampaignsRoute
   '/admin/messages': typeof AuthenticatedAdminMessagesRoute
   '/admin/posts': typeof AuthenticatedAdminPostsRoute
   '/admin/programs': typeof AuthenticatedAdminProgramsRoute
@@ -233,6 +242,7 @@ export interface FileRoutesById {
   '/_site/get-involved': typeof SiteGetInvolvedRoute
   '/_site/': typeof SiteIndexRoute
   '/_authenticated/admin/about': typeof AuthenticatedAdminAboutRoute
+  '/_authenticated/admin/campaigns': typeof AuthenticatedAdminCampaignsRoute
   '/_authenticated/admin/messages': typeof AuthenticatedAdminMessagesRoute
   '/_authenticated/admin/posts': typeof AuthenticatedAdminPostsRoute
   '/_authenticated/admin/programs': typeof AuthenticatedAdminProgramsRoute
@@ -261,6 +271,7 @@ export interface FileRouteTypes {
     | '/donate'
     | '/get-involved'
     | '/admin/about'
+    | '/admin/campaigns'
     | '/admin/messages'
     | '/admin/posts'
     | '/admin/programs'
@@ -286,6 +297,7 @@ export interface FileRouteTypes {
     | '/donate'
     | '/get-involved'
     | '/admin/about'
+    | '/admin/campaigns'
     | '/admin/messages'
     | '/admin/posts'
     | '/admin/programs'
@@ -314,6 +326,7 @@ export interface FileRouteTypes {
     | '/_site/get-involved'
     | '/_site/'
     | '/_authenticated/admin/about'
+    | '/_authenticated/admin/campaigns'
     | '/_authenticated/admin/messages'
     | '/_authenticated/admin/posts'
     | '/_authenticated/admin/programs'
@@ -424,6 +437,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminAboutRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/campaigns': {
+      id: '/_authenticated/admin/campaigns'
+      path: '/campaigns'
+      fullPath: '/admin/campaigns'
+      preLoaderRoute: typeof AuthenticatedAdminCampaignsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/admin/messages': {
       id: '/_authenticated/admin/messages'
       path: '/messages'
@@ -527,6 +547,7 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminAboutRoute: typeof AuthenticatedAdminAboutRoute
+  AuthenticatedAdminCampaignsRoute: typeof AuthenticatedAdminCampaignsRoute
   AuthenticatedAdminMessagesRoute: typeof AuthenticatedAdminMessagesRoute
   AuthenticatedAdminPostsRoute: typeof AuthenticatedAdminPostsRoute
   AuthenticatedAdminProgramsRoute: typeof AuthenticatedAdminProgramsRoute
@@ -538,6 +559,7 @@ interface AuthenticatedAdminRouteChildren {
 
 const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminAboutRoute: AuthenticatedAdminAboutRoute,
+  AuthenticatedAdminCampaignsRoute: AuthenticatedAdminCampaignsRoute,
   AuthenticatedAdminMessagesRoute: AuthenticatedAdminMessagesRoute,
   AuthenticatedAdminPostsRoute: AuthenticatedAdminPostsRoute,
   AuthenticatedAdminProgramsRoute: AuthenticatedAdminProgramsRoute,
