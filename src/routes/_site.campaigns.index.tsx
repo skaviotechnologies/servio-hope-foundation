@@ -2,7 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowRight } from "lucide-react";
 import { campaignsQuery, campaignProgress, formatAmount } from "@/lib/donations";
-import { PageHero, ListBody } from "@/components/site/ListPageExports";
+import { PageHero } from "@/components/site/ui";
+import { ListBody } from "@/components/site/ListPage";
 import heroImg from "@/assets/hero.jpg";
 
 export const Route = createFileRoute("/_site/campaigns/")({

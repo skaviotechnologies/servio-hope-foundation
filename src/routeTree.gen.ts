@@ -27,6 +27,8 @@ import { Route as AuthenticatedAdminProgramsRouteImport } from './routes/_authen
 import { Route as AuthenticatedAdminProjectsRouteImport } from './routes/_authenticated/admin.projects'
 import { Route as AuthenticatedAdminSettingsRouteImport } from './routes/_authenticated/admin.settings'
 import { Route as AuthenticatedAdminTeamRouteImport } from './routes/_authenticated/admin.team'
+import { Route as SiteCampaignsIndexRouteImport } from './routes/_site.campaigns.index'
+import { Route as SiteCampaignsSlugRouteImport } from './routes/_site.campaigns.$slug'
 import { Route as SiteNewsIndexRouteImport } from './routes/_site.news.index'
 import { Route as SiteNewsSlugRouteImport } from './routes/_site.news.$slug'
 import { Route as SiteProgramsIndexRouteImport } from './routes/_site.programs.index'
@@ -126,6 +128,16 @@ const AuthenticatedAdminTeamRoute = AuthenticatedAdminTeamRouteImport.update({
   path: '/team',
   getParentRoute: () => AuthenticatedAdminRoute,
 } as any)
+const SiteCampaignsIndexRoute = SiteCampaignsIndexRouteImport.update({
+  id: '/campaigns/',
+  path: '/campaigns/',
+  getParentRoute: () => SiteRoute,
+} as any)
+const SiteCampaignsSlugRoute = SiteCampaignsSlugRouteImport.update({
+  id: '/campaigns/$slug',
+  path: '/campaigns/$slug',
+  getParentRoute: () => SiteRoute,
+} as any)
 const SiteNewsIndexRoute = SiteNewsIndexRouteImport.update({
   id: '/news/',
   path: '/news/',
@@ -173,10 +185,12 @@ export interface FileRoutesByFullPath {
   '/admin/projects': typeof AuthenticatedAdminProjectsRoute
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/admin/team': typeof AuthenticatedAdminTeamRoute
+  '/campaigns/$slug': typeof SiteCampaignsSlugRoute
   '/news/$slug': typeof SiteNewsSlugRoute
   '/programs/$slug': typeof SiteProgramsSlugRoute
   '/projects/$slug': typeof SiteProjectsSlugRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
+  '/campaigns/': typeof SiteCampaignsIndexRoute
   '/news/': typeof SiteNewsIndexRoute
   '/programs/': typeof SiteProgramsIndexRoute
   '/projects/': typeof SiteProjectsIndexRoute
@@ -196,10 +210,12 @@ export interface FileRoutesByTo {
   '/admin/projects': typeof AuthenticatedAdminProjectsRoute
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/admin/team': typeof AuthenticatedAdminTeamRoute
+  '/campaigns/$slug': typeof SiteCampaignsSlugRoute
   '/news/$slug': typeof SiteNewsSlugRoute
   '/programs/$slug': typeof SiteProgramsSlugRoute
   '/projects/$slug': typeof SiteProjectsSlugRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
+  '/campaigns': typeof SiteCampaignsIndexRoute
   '/news': typeof SiteNewsIndexRoute
   '/programs': typeof SiteProgramsIndexRoute
   '/projects': typeof SiteProjectsIndexRoute
@@ -223,10 +239,12 @@ export interface FileRoutesById {
   '/_authenticated/admin/projects': typeof AuthenticatedAdminProjectsRoute
   '/_authenticated/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/_authenticated/admin/team': typeof AuthenticatedAdminTeamRoute
+  '/_site/campaigns/$slug': typeof SiteCampaignsSlugRoute
   '/_site/news/$slug': typeof SiteNewsSlugRoute
   '/_site/programs/$slug': typeof SiteProgramsSlugRoute
   '/_site/projects/$slug': typeof SiteProjectsSlugRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
+  '/_site/campaigns/': typeof SiteCampaignsIndexRoute
   '/_site/news/': typeof SiteNewsIndexRoute
   '/_site/programs/': typeof SiteProgramsIndexRoute
   '/_site/projects/': typeof SiteProjectsIndexRoute
@@ -249,10 +267,12 @@ export interface FileRouteTypes {
     | '/admin/projects'
     | '/admin/settings'
     | '/admin/team'
+    | '/campaigns/$slug'
     | '/news/$slug'
     | '/programs/$slug'
     | '/projects/$slug'
     | '/admin/'
+    | '/campaigns/'
     | '/news/'
     | '/programs/'
     | '/projects/'
@@ -272,10 +292,12 @@ export interface FileRouteTypes {
     | '/admin/projects'
     | '/admin/settings'
     | '/admin/team'
+    | '/campaigns/$slug'
     | '/news/$slug'
     | '/programs/$slug'
     | '/projects/$slug'
     | '/admin'
+    | '/campaigns'
     | '/news'
     | '/programs'
     | '/projects'
@@ -298,10 +320,12 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/projects'
     | '/_authenticated/admin/settings'
     | '/_authenticated/admin/team'
+    | '/_site/campaigns/$slug'
     | '/_site/news/$slug'
     | '/_site/programs/$slug'
     | '/_site/projects/$slug'
     | '/_authenticated/admin/'
+    | '/_site/campaigns/'
     | '/_site/news/'
     | '/_site/programs/'
     | '/_site/projects/'
@@ -442,6 +466,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminTeamRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_site/campaigns/': {
+      id: '/_site/campaigns/'
+      path: '/campaigns'
+      fullPath: '/campaigns/'
+      preLoaderRoute: typeof SiteCampaignsIndexRouteImport
+      parentRoute: typeof SiteRoute
+    }
+    '/_site/campaigns/$slug': {
+      id: '/_site/campaigns/$slug'
+      path: '/campaigns/$slug'
+      fullPath: '/campaigns/$slug'
+      preLoaderRoute: typeof SiteCampaignsSlugRouteImport
+      parentRoute: typeof SiteRoute
+    }
     '/_site/news/': {
       id: '/_site/news/'
       path: '/news'
@@ -529,9 +567,11 @@ interface SiteRouteChildren {
   SiteDonateRoute: typeof SiteDonateRoute
   SiteGetInvolvedRoute: typeof SiteGetInvolvedRoute
   SiteIndexRoute: typeof SiteIndexRoute
+  SiteCampaignsSlugRoute: typeof SiteCampaignsSlugRoute
   SiteNewsSlugRoute: typeof SiteNewsSlugRoute
   SiteProgramsSlugRoute: typeof SiteProgramsSlugRoute
   SiteProjectsSlugRoute: typeof SiteProjectsSlugRoute
+  SiteCampaignsIndexRoute: typeof SiteCampaignsIndexRoute
   SiteNewsIndexRoute: typeof SiteNewsIndexRoute
   SiteProgramsIndexRoute: typeof SiteProgramsIndexRoute
   SiteProjectsIndexRoute: typeof SiteProjectsIndexRoute
@@ -543,9 +583,11 @@ const SiteRouteChildren: SiteRouteChildren = {
   SiteDonateRoute: SiteDonateRoute,
   SiteGetInvolvedRoute: SiteGetInvolvedRoute,
   SiteIndexRoute: SiteIndexRoute,
+  SiteCampaignsSlugRoute: SiteCampaignsSlugRoute,
   SiteNewsSlugRoute: SiteNewsSlugRoute,
   SiteProgramsSlugRoute: SiteProgramsSlugRoute,
   SiteProjectsSlugRoute: SiteProjectsSlugRoute,
+  SiteCampaignsIndexRoute: SiteCampaignsIndexRoute,
   SiteNewsIndexRoute: SiteNewsIndexRoute,
   SiteProgramsIndexRoute: SiteProgramsIndexRoute,
   SiteProjectsIndexRoute: SiteProjectsIndexRoute,
