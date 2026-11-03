@@ -50,6 +50,153 @@ export type Database = {
         }
         Relationships: []
       }
+      campaigns: {
+        Row: {
+          body: string
+          created_at: string
+          currency: string
+          end_date: string | null
+          funding_target: number | null
+          id: string
+          image_url: string | null
+          program_id: string | null
+          project_id: string | null
+          published: boolean
+          slug: string
+          sort_order: number
+          start_date: string | null
+          summary: string
+          title: string
+          updated_at: string
+          updates: Json
+        }
+        Insert: {
+          body?: string
+          created_at?: string
+          currency?: string
+          end_date?: string | null
+          funding_target?: number | null
+          id?: string
+          image_url?: string | null
+          program_id?: string | null
+          project_id?: string | null
+          published?: boolean
+          slug: string
+          sort_order?: number
+          start_date?: string | null
+          summary?: string
+          title: string
+          updated_at?: string
+          updates?: Json
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          currency?: string
+          end_date?: string | null
+          funding_target?: number | null
+          id?: string
+          image_url?: string | null
+          program_id?: string | null
+          project_id?: string | null
+          published?: boolean
+          slug?: string
+          sort_order?: number
+          start_date?: string | null
+          summary?: string
+          title?: string
+          updated_at?: string
+          updates?: Json
+        }
+        Relationships: [
+          {
+            foreignKeyName: "campaigns_program_id_fkey"
+            columns: ["program_id"]
+            isOneToOne: false
+            referencedRelation: "programs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "campaigns_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      donations: {
+        Row: {
+          amount: number
+          campaign_id: string | null
+          created_at: string
+          currency: string
+          designation: string
+          donor_email: string
+          donor_name: string
+          donor_phone: string | null
+          frequency: string
+          id: string
+          is_anonymous: boolean
+          method: string
+          notes: string | null
+          program_id: string | null
+          reference: string | null
+          status: string
+        }
+        Insert: {
+          amount: number
+          campaign_id?: string | null
+          created_at?: string
+          currency?: string
+          designation?: string
+          donor_email: string
+          donor_name: string
+          donor_phone?: string | null
+          frequency?: string
+          id?: string
+          is_anonymous?: boolean
+          method?: string
+          notes?: string | null
+          program_id?: string | null
+          reference?: string | null
+          status?: string
+        }
+        Update: {
+          amount?: number
+          campaign_id?: string | null
+          created_at?: string
+          currency?: string
+          designation?: string
+          donor_email?: string
+          donor_name?: string
+          donor_phone?: string | null
+          frequency?: string
+          id?: string
+          is_anonymous?: boolean
+          method?: string
+          notes?: string | null
+          program_id?: string | null
+          reference?: string | null
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "donations_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "campaigns"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "donations_program_id_fkey"
+            columns: ["program_id"]
+            isOneToOne: false
+            referencedRelation: "programs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       messages: {
         Row: {
           created_at: string
@@ -479,6 +626,23 @@ export type Database = {
       }
     }
     Views: {
+      public_campaign_progress: {
+        Row: {
+          campaign_id: string | null
+          currency: string | null
+          verified_count: number | null
+          verified_total: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "donations_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "campaigns"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       public_project_finances: {
         Row: {
           beneficiaries_reached: number | null
