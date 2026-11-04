@@ -39,7 +39,7 @@ function DonationsAdmin() {
   });
   const inv = () => qc.invalidateQueries({ queryKey: ["admin", "donations"] });
 
-  const setStatus = useMutation({
+  const updateStatus = useMutation({
     mutationFn: async ({ id, next }: { id: string; next: string }) => {
       const { error } = await supabase.from("donations").update({ status: next }).eq("id", id);
       if (error) throw error;
@@ -73,7 +73,7 @@ function DonationsAdmin() {
       };
       if (!payload.donor_name) throw new Error("Donor name is required.");
       validateDonation(payload);
-      const { error } = await supabase.from("donations").insert(payload);
+      const { error } = await supabase.from("donations").insert({ ...payload, amount: Number(payload.amount) });
       if (error) throw error;
     },
     onSuccess: () => { toast.success("Offline donation recorded"); setRecording(null); inv(); },
@@ -136,10 +136,10 @@ function DonationsAdmin() {
                   <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${d.status === "verified" ? "bg-emerald text-secondary-foreground" : d.status === "cancelled" ? "bg-muted text-muted-foreground" : "bg-gold/20 text-ink"}`}>{donationStatuses[d.status as keyof typeof donationStatuses] ?? d.status}</span>
                   <time className="text-xs text-muted-foreground">{new Date(d.created_at).toLocaleDateString()}</time>
                   {d.status !== "verified" && d.status !== "cancelled" && (
-                    <Button variant="ghost" size="icon" aria-label="Mark as verified" title="Mark as verified (payment confirmed)" disabled={setStatus.isPending} onClick={() => setStatus.mutate({ id: d.id, next: "verified" })}><BadgeCheck className="text-emerald" /></Button>
+                    <Button variant="ghost" size="icon" aria-label="Mark as verified" title="Mark as verified (payment confirmed)" disabled={updateStatus.isPending} onClick={() => updateStatus.mutate({ id: d.id, next: "verified" })}><BadgeCheck className="text-emerald" /></Button>
                   )}
                   {d.status !== "cancelled" && (
-                    <Button variant="ghost" size="icon" aria-label="Cancel donation" title="Cancel" disabled={setStatus.isPending} onClick={() => setStatus.mutate({ id: d.id, next: "cancelled" })}><XCircle className="text-muted-foreground" /></Button>
+                    <Button variant="ghost" size="icon" aria-label="Cancel donation" title="Cancel" disabled={updateStatus.isPending} onClick={() => updateStatus.mutate({ id: d.id, next: "cancelled" })}><XCircle className="text-muted-foreground" /></Button>
                   )}
                   <Button variant="ghost" size="icon" aria-label="Delete donation" onClick={() => confirm("Delete this donation record?") && del.mutate(d.id)}><Trash2 className="text-destructive" /></Button>
                 </li>

@@ -6,7 +6,7 @@ import type { ReactNode } from "react";
 
 export function Detail({ loading, error, found, back, backLabel, eyebrow, title, image, meta, body, aside }: {
   loading: boolean; error: boolean; found: boolean;
-  back: "/programs" | "/projects" | "/news"; backLabel: string;
+  back: "/programs" | "/projects" | "/news" | "/campaigns"; backLabel: string;
   eyebrow?: string | undefined; title?: string | undefined; image?: string | null | undefined; meta?: ReactNode; body?: string | undefined; aside?: ReactNode;
 }) {
   if (loading)

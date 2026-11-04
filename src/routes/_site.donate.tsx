@@ -6,6 +6,7 @@ import { settingsQuery } from "@/lib/site";
 import { PageHero } from "@/components/site/ui";
 import heroImg from "@/assets/hero.jpg";
 import { CauseMatcher } from "@/components/site/CauseMatcher";
+import { DonationForm } from "@/components/site/DonationForm";
 
 export const Route = createFileRoute("/_site/donate")({
   head: () => ({
@@ -28,6 +29,10 @@ function Donate() {
       <PageHero eyebrow="Donate" title="Your support inspires hope" intro={s?.donate_intro} image={heroImg} />
       <section className="container-site max-w-3xl space-y-10 py-20">
         <CauseMatcher />
+        <DonationForm />
+        <p className="text-center text-sm text-muted-foreground">
+          Want to see where the need is greatest right now? <Link to="/campaigns" className="font-semibold text-emerald hover:underline">Browse our active fundraising campaigns</Link>.
+        </p>
         <div className="rounded-3xl border bg-card p-8 shadow-soft md:p-12">
           <HandHeart className="h-10 w-10 text-gold" aria-hidden />
           <h2 className="mt-4 text-2xl font-bold text-navy">How to give</h2>

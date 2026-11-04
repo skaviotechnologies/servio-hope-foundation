@@ -1,7 +1,7 @@
 import { createFileRoute, Link, Outlet, useNavigate } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { FileText, FolderKanban, Inbox, LayoutDashboard, LogOut, Menu, Newspaper, Settings, ExternalLink, ShieldAlert, Users, BookOpen } from "lucide-react";
+import { FileText, FolderKanban, HandHeart, Inbox, LayoutDashboard, LogOut, Megaphone, Menu, Newspaper, Settings, ExternalLink, ShieldAlert, Users, BookOpen } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -27,6 +27,8 @@ const LINKS = [
   { to: "/admin/programs", label: "Programmes", icon: FileText },
   { to: "/admin/projects", label: "Projects", icon: FolderKanban },
   { to: "/admin/posts", label: "News", icon: Newspaper },
+  { to: "/admin/campaigns", label: "Campaigns", icon: Megaphone },
+  { to: "/admin/donations", label: "Donations", icon: HandHeart },
   { to: "/admin/messages", label: "Messages", icon: Inbox },
   { to: "/admin/about", label: "About the foundation", icon: BookOpen },
   { to: "/admin/team", label: "Leadership", icon: Users },

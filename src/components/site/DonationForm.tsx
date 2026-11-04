@@ -48,7 +48,7 @@ export function DonationForm() {
       };
       if (!payload.donor_name) throw new Error("Please tell us your name.");
       validateDonation(payload);
-      const { error } = await supabase.from("donations").insert(payload);
+      const { error } = await supabase.from("donations").insert({ ...payload, amount: Number(payload.amount) });
       if (error) throw error;
     },
     onSuccess: () => setDone(true),

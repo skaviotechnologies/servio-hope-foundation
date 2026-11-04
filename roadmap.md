@@ -13,3 +13,9 @@
 - [x] Add complete project fields, archive controls and secure public disclosure.
 - [x] Add administrator editing, document uploads and public detail/sharing layouts.
 - [x] Verify disclosure rules, administration and public read-back; remove temporary records and uploaded verification media.
+
+# Phase 6: Donations and fundraising
+- [x] Add campaigns (targets, dates, related programme/project, updates, publication approval) and donation records with staff-only donor data.
+- [x] Add public campaign pages with verified-only progress, a donation pledge form (one-time/monthly, general/programme/campaign, UGX default), and admin donation tracking with filters, offline recording, verification and CSV export.
+- [x] Verify pledge submission, campaign progress, admin verification flow and phone layout; remove temporary records.
+- [ ] Live online payments (MTN MoMo, Airtel, cards) stay off until a Uganda-compatible provider is configured.
