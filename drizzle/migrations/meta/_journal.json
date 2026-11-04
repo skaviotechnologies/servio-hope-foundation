@@ -43,6 +43,13 @@
       "when": 1793675622333,
       "tag": "0005_create_campaigns_and_donations",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1793777870647,
+      "tag": "0006_create_volunteer_management",
+      "breakpoints": true
     }
   ]
 }

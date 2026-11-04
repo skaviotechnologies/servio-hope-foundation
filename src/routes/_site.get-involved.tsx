@@ -4,6 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { settingsQuery } from "@/lib/site";
 import { PageHero } from "@/components/site/ui";
 import { MessageForm } from "@/components/site/MessageForm";
+import { VolunteerForm } from "@/components/site/VolunteerForm";
 import youthImg from "@/assets/youth.jpg";
 
 export const Route = createFileRoute("/_site/get-involved")({

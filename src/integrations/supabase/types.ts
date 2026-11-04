@@ -624,6 +624,104 @@ export type Database = {
         }
         Relationships: []
       }
+      volunteer_applications: {
+        Row: {
+          admin_notes: string
+          assigned_activities: string
+          availability: string
+          consent: boolean
+          country: string
+          created_at: string
+          district: string | null
+          email: string
+          experience: string
+          full_name: string
+          id: string
+          interests: string
+          motivation: string
+          phone: string | null
+          skills: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          admin_notes?: string
+          assigned_activities?: string
+          availability?: string
+          consent?: boolean
+          country?: string
+          created_at?: string
+          district?: string | null
+          email: string
+          experience?: string
+          full_name: string
+          id?: string
+          interests?: string
+          motivation?: string
+          phone?: string | null
+          skills?: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          admin_notes?: string
+          assigned_activities?: string
+          availability?: string
+          consent?: boolean
+          country?: string
+          created_at?: string
+          district?: string | null
+          email?: string
+          experience?: string
+          full_name?: string
+          id?: string
+          interests?: string
+          motivation?: string
+          phone?: string | null
+          skills?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      volunteer_hours: {
+        Row: {
+          activity: string
+          application_id: string
+          created_at: string
+          date: string
+          hours: number
+          id: string
+          notes: string
+        }
+        Insert: {
+          activity: string
+          application_id: string
+          created_at?: string
+          date?: string
+          hours: number
+          id?: string
+          notes?: string
+        }
+        Update: {
+          activity?: string
+          application_id?: string
+          created_at?: string
+          date?: string
+          hours?: number
+          id?: string
+          notes?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "volunteer_hours_application_id_fkey"
+            columns: ["application_id"]
+            isOneToOne: false
+            referencedRelation: "volunteer_applications"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       public_campaign_progress: {

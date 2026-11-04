@@ -29,6 +29,7 @@ const LINKS = [
   { to: "/admin/posts", label: "News", icon: Newspaper },
   { to: "/admin/campaigns", label: "Campaigns", icon: Megaphone },
   { to: "/admin/donations", label: "Donations", icon: HandHeart },
+  { to: "/admin/volunteers", label: "Volunteers", icon: HandHeart },
   { to: "/admin/messages", label: "Messages", icon: Inbox },
   { to: "/admin/about", label: "About the foundation", icon: BookOpen },
   { to: "/admin/team", label: "Leadership", icon: Users },

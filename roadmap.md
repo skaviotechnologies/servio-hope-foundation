@@ -19,3 +19,9 @@
 - [x] Add public campaign pages with verified-only progress, a donation pledge form (one-time/monthly, general/programme/campaign, UGX default), and admin donation tracking with filters, offline recording, verification and CSV export.
 - [x] Verify pledge submission, campaign progress, admin verification flow and phone layout; remove temporary records.
 - [ ] Live online payments (MTN MoMo, Airtel, cards) stay off until a Uganda-compatible provider is configured.
+
+# Phase 7: Volunteer management
+- [x] Add volunteer applications (contact, location, interests, skills, availability, experience, motivation, consent) with anon-apply-only access and staff-only visibility.
+- [x] Replace the public volunteer tab with a full application form requiring data-processing consent.
+- [x] Add admin volunteer screen: search/filter, approve/reject/under-review/inactive, notes and information requests, activity assignment, hours tracking, CSV export, applicant contact.
+- [ ] Verify application submission, status changes, hours recording, CSV export, applicant privacy and phone layout; remove temporary records.
