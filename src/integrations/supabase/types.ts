@@ -50,6 +50,72 @@ export type Database = {
         }
         Relationships: []
       }
+      assistance_requests: {
+        Row: {
+          archived: boolean
+          assigned_to: string
+          category: string
+          community_name: string | null
+          consent: boolean
+          country: string
+          created_at: string
+          description: string
+          district: string | null
+          email: string | null
+          full_name: string
+          id: string
+          internal_notes: string
+          outcome: string
+          phone: string | null
+          preferred_contact: string
+          requester_type: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          archived?: boolean
+          assigned_to?: string
+          category: string
+          community_name?: string | null
+          consent?: boolean
+          country?: string
+          created_at?: string
+          description: string
+          district?: string | null
+          email?: string | null
+          full_name: string
+          id?: string
+          internal_notes?: string
+          outcome?: string
+          phone?: string | null
+          preferred_contact?: string
+          requester_type?: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          archived?: boolean
+          assigned_to?: string
+          category?: string
+          community_name?: string | null
+          consent?: boolean
+          country?: string
+          created_at?: string
+          description?: string
+          district?: string | null
+          email?: string | null
+          full_name?: string
+          id?: string
+          internal_notes?: string
+          outcome?: string
+          phone?: string | null
+          preferred_contact?: string
+          requester_type?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       campaigns: {
         Row: {
           body: string

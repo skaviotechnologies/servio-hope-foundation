@@ -50,6 +50,13 @@
       "when": 1793777870647,
       "tag": "0006_create_volunteer_management",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1793876377058,
+      "tag": "0007_assistance_requests",
+      "breakpoints": true
     }
   ]
 }
