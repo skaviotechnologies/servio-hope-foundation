@@ -268,17 +268,17 @@ function ApplicationDetail({ app, hours, onPatch, onDelete, onAddHours, onDelete
           <div>
             <Label htmlFor={`h-act-${app.id}`} className="sr-only">Activity</Label>
             <Input id={`h-act-${app.id}`} name="activity" placeholder="Activity" maxLength={200} />
-            {hourErrors.activity && <p className="mt-1 text-xs text-destructive" role="alert">{hourErrors.activity}</p>}
+            {hourErrors["activity"] && <p className="mt-1 text-xs text-destructive" role="alert">{hourErrors["activity"]}</p>}
           </div>
           <div>
             <Label htmlFor={`h-hrs-${app.id}`} className="sr-only">Hours</Label>
             <Input id={`h-hrs-${app.id}`} name="hours" type="number" step="0.5" min="0.5" placeholder="Hours" />
-            {hourErrors.hours && <p className="mt-1 text-xs text-destructive" role="alert">{hourErrors.hours}</p>}
+            {hourErrors["hours"] && <p className="mt-1 text-xs text-destructive" role="alert">{hourErrors["hours"]}</p>}
           </div>
           <div>
             <Label htmlFor={`h-date-${app.id}`} className="sr-only">Date</Label>
             <Input id={`h-date-${app.id}`} name="date" type="date" defaultValue={new Date().toISOString().slice(0, 10)} />
-            {hourErrors.date && <p className="mt-1 text-xs text-destructive" role="alert">{hourErrors.date}</p>}
+            {hourErrors["date"] && <p className="mt-1 text-xs text-destructive" role="alert">{hourErrors["date"]}</p>}
           </div>
           <Button type="submit" size="sm" className="self-start"><Plus /> Record hours</Button>
         </form>

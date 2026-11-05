@@ -34,7 +34,7 @@ function GetInvolved() {
           </TabsList>
           <TabsContent value="volunteer">
             <h2 className="mb-6 text-2xl font-bold text-navy">Volunteer application</h2>
-            <MessageForm kind="volunteer" cta="Submit application" messageLabel="Your skills, availability and how you'd like to help" />
+            <VolunteerForm />
           </TabsContent>
           <TabsContent value="partner">
             <h2 className="mb-6 text-2xl font-bold text-navy">Partnership enquiry</h2>

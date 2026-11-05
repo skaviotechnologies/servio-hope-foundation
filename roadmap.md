@@ -24,4 +24,4 @@
 - [x] Add volunteer applications (contact, location, interests, skills, availability, experience, motivation, consent) with anon-apply-only access and staff-only visibility.
 - [x] Replace the public volunteer tab with a full application form requiring data-processing consent.
 - [x] Add admin volunteer screen: search/filter, approve/reject/under-review/inactive, notes and information requests, activity assignment, hours tracking, CSV export, applicant contact.
-- [ ] Verify application submission, status changes, hours recording, CSV export, applicant privacy and phone layout; remove temporary records.
+- [x] Verify application submission, status changes, hours recording, CSV export, applicant privacy and phone layout; remove temporary records.

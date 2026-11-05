@@ -100,7 +100,7 @@ export function VolunteerForm() {
             I consent to Servio Hope Foundation storing and processing the information I have provided so my volunteer application can be reviewed and I can be contacted about it.
           </Label>
         </div>
-        {errors.consent && <p className="text-sm text-destructive" role="alert">{errors.consent}</p>}
+        {errors["consent"] && <p className="text-sm text-destructive" role="alert">{errors["consent"]}</p>}
       </div>
       <Button type="submit" variant="emerald" size="lg" disabled={busy} className="justify-self-start">
         {busy ? "Submitting…" : "Submit application"}
