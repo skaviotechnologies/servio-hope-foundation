@@ -19,3 +19,4 @@
 - AI features run in server functions (`*.functions.ts` + `*.server.ts`) via the AI Gateway and ground answers only in published CMS records. Why: keeps keys server-side and prevents invented claims.
 - Project financial source records are staff-only; public reads use the masked public_project_finances view and published, unarchived project queries. Why: undisclosed budgets and unverified achievements must never reach public clients, including related-project listings.
 - Project supporting documents use PDF uploads in the existing private media bucket and explicit external HTTPS links. Why: reuses staff-only storage permissions and avoids executable document uploads.
+- Assistance requests are insert-only for the public (RLS forces new/unassigned/no notes); staff read/update, admins alone delete. Why: applicant data must stay private and cases can't be pre-filled by visitors.

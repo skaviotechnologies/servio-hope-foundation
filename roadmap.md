@@ -25,3 +25,5 @@
 - [x] Replace the public volunteer tab with a full application form requiring data-processing consent.
 - [x] Add admin volunteer screen: search/filter, approve/reject/under-review/inactive, notes and information requests, activity assignment, hours tracking, CSV export, applicant contact.
 - [x] Verify application submission, status changes, hours recording, CSV export, applicant privacy and phone layout; remove temporary records.
+# Phase 8: Request assistance
+- [x] Private assistance requests (public submit only; staff review, assign, status, notes, contact, outcome, archive; admin-only delete).

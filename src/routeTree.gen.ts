@@ -19,8 +19,10 @@ import { Route as SiteAboutRouteImport } from './routes/_site.about'
 import { Route as SiteContactRouteImport } from './routes/_site.contact'
 import { Route as SiteDonateRouteImport } from './routes/_site.donate'
 import { Route as SiteGetInvolvedRouteImport } from './routes/_site.get-involved'
+import { Route as SiteRequestAssistanceRouteImport } from './routes/_site.request-assistance'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
 import { Route as AuthenticatedAdminAboutRouteImport } from './routes/_authenticated/admin.about'
+import { Route as AuthenticatedAdminAssistanceRouteImport } from './routes/_authenticated/admin.assistance'
 import { Route as AuthenticatedAdminCampaignsRouteImport } from './routes/_authenticated/admin.campaigns'
 import { Route as AuthenticatedAdminDonationsRouteImport } from './routes/_authenticated/admin.donations'
 import { Route as AuthenticatedAdminMessagesRouteImport } from './routes/_authenticated/admin.messages'
@@ -87,6 +89,11 @@ const SiteGetInvolvedRoute = SiteGetInvolvedRouteImport.update({
   path: '/get-involved',
   getParentRoute: () => SiteRoute,
 } as any)
+const SiteRequestAssistanceRoute = SiteRequestAssistanceRouteImport.update({
+  id: '/request-assistance',
+  path: '/request-assistance',
+  getParentRoute: () => SiteRoute,
+} as any)
 const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -97,6 +104,12 @@ const AuthenticatedAdminAboutRoute = AuthenticatedAdminAboutRouteImport.update({
   path: '/about',
   getParentRoute: () => AuthenticatedAdminRoute,
 } as any)
+const AuthenticatedAdminAssistanceRoute =
+  AuthenticatedAdminAssistanceRouteImport.update({
+    id: '/assistance',
+    path: '/assistance',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 const AuthenticatedAdminCampaignsRoute =
   AuthenticatedAdminCampaignsRouteImport.update({
     id: '/campaigns',
@@ -199,7 +212,9 @@ export interface FileRoutesByFullPath {
   '/contact': typeof SiteContactRoute
   '/donate': typeof SiteDonateRoute
   '/get-involved': typeof SiteGetInvolvedRoute
+  '/request-assistance': typeof SiteRequestAssistanceRoute
   '/admin/about': typeof AuthenticatedAdminAboutRoute
+  '/admin/assistance': typeof AuthenticatedAdminAssistanceRoute
   '/admin/campaigns': typeof AuthenticatedAdminCampaignsRoute
   '/admin/donations': typeof AuthenticatedAdminDonationsRoute
   '/admin/messages': typeof AuthenticatedAdminMessagesRoute
@@ -227,7 +242,9 @@ export interface FileRoutesByTo {
   '/contact': typeof SiteContactRoute
   '/donate': typeof SiteDonateRoute
   '/get-involved': typeof SiteGetInvolvedRoute
+  '/request-assistance': typeof SiteRequestAssistanceRoute
   '/admin/about': typeof AuthenticatedAdminAboutRoute
+  '/admin/assistance': typeof AuthenticatedAdminAssistanceRoute
   '/admin/campaigns': typeof AuthenticatedAdminCampaignsRoute
   '/admin/donations': typeof AuthenticatedAdminDonationsRoute
   '/admin/messages': typeof AuthenticatedAdminMessagesRoute
@@ -258,8 +275,10 @@ export interface FileRoutesById {
   '/_site/contact': typeof SiteContactRoute
   '/_site/donate': typeof SiteDonateRoute
   '/_site/get-involved': typeof SiteGetInvolvedRoute
+  '/_site/request-assistance': typeof SiteRequestAssistanceRoute
   '/_site/': typeof SiteIndexRoute
   '/_authenticated/admin/about': typeof AuthenticatedAdminAboutRoute
+  '/_authenticated/admin/assistance': typeof AuthenticatedAdminAssistanceRoute
   '/_authenticated/admin/campaigns': typeof AuthenticatedAdminCampaignsRoute
   '/_authenticated/admin/donations': typeof AuthenticatedAdminDonationsRoute
   '/_authenticated/admin/messages': typeof AuthenticatedAdminMessagesRoute
@@ -290,7 +309,9 @@ export interface FileRouteTypes {
     | '/contact'
     | '/donate'
     | '/get-involved'
+    | '/request-assistance'
     | '/admin/about'
+    | '/admin/assistance'
     | '/admin/campaigns'
     | '/admin/donations'
     | '/admin/messages'
@@ -318,7 +339,9 @@ export interface FileRouteTypes {
     | '/contact'
     | '/donate'
     | '/get-involved'
+    | '/request-assistance'
     | '/admin/about'
+    | '/admin/assistance'
     | '/admin/campaigns'
     | '/admin/donations'
     | '/admin/messages'
@@ -348,8 +371,10 @@ export interface FileRouteTypes {
     | '/_site/contact'
     | '/_site/donate'
     | '/_site/get-involved'
+    | '/_site/request-assistance'
     | '/_site/'
     | '/_authenticated/admin/about'
+    | '/_authenticated/admin/assistance'
     | '/_authenticated/admin/campaigns'
     | '/_authenticated/admin/donations'
     | '/_authenticated/admin/messages'
@@ -449,6 +474,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SiteGetInvolvedRouteImport
       parentRoute: typeof SiteRoute
     }
+    '/_site/request-assistance': {
+      id: '/_site/request-assistance'
+      path: '/request-assistance'
+      fullPath: '/request-assistance'
+      preLoaderRoute: typeof SiteRequestAssistanceRouteImport
+      parentRoute: typeof SiteRoute
+    }
     '/_authenticated/admin/': {
       id: '/_authenticated/admin/'
       path: '/'
@@ -461,6 +493,13 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/admin/about'
       preLoaderRoute: typeof AuthenticatedAdminAboutRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/assistance': {
+      id: '/_authenticated/admin/assistance'
+      path: '/assistance'
+      fullPath: '/admin/assistance'
+      preLoaderRoute: typeof AuthenticatedAdminAssistanceRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
     '/_authenticated/admin/campaigns': {
@@ -587,6 +626,7 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminAboutRoute: typeof AuthenticatedAdminAboutRoute
+  AuthenticatedAdminAssistanceRoute: typeof AuthenticatedAdminAssistanceRoute
   AuthenticatedAdminCampaignsRoute: typeof AuthenticatedAdminCampaignsRoute
   AuthenticatedAdminDonationsRoute: typeof AuthenticatedAdminDonationsRoute
   AuthenticatedAdminMessagesRoute: typeof AuthenticatedAdminMessagesRoute
@@ -601,6 +641,7 @@ interface AuthenticatedAdminRouteChildren {
 
 const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminAboutRoute: AuthenticatedAdminAboutRoute,
+  AuthenticatedAdminAssistanceRoute: AuthenticatedAdminAssistanceRoute,
   AuthenticatedAdminCampaignsRoute: AuthenticatedAdminCampaignsRoute,
   AuthenticatedAdminDonationsRoute: AuthenticatedAdminDonationsRoute,
   AuthenticatedAdminMessagesRoute: AuthenticatedAdminMessagesRoute,
@@ -632,6 +673,7 @@ interface SiteRouteChildren {
   SiteContactRoute: typeof SiteContactRoute
   SiteDonateRoute: typeof SiteDonateRoute
   SiteGetInvolvedRoute: typeof SiteGetInvolvedRoute
+  SiteRequestAssistanceRoute: typeof SiteRequestAssistanceRoute
   SiteIndexRoute: typeof SiteIndexRoute
   SiteCampaignsSlugRoute: typeof SiteCampaignsSlugRoute
   SiteNewsSlugRoute: typeof SiteNewsSlugRoute
@@ -648,6 +690,7 @@ const SiteRouteChildren: SiteRouteChildren = {
   SiteContactRoute: SiteContactRoute,
   SiteDonateRoute: SiteDonateRoute,
   SiteGetInvolvedRoute: SiteGetInvolvedRoute,
+  SiteRequestAssistanceRoute: SiteRequestAssistanceRoute,
   SiteIndexRoute: SiteIndexRoute,
   SiteCampaignsSlugRoute: SiteCampaignsSlugRoute,
   SiteNewsSlugRoute: SiteNewsSlugRoute,
