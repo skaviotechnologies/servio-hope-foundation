@@ -301,38 +301,68 @@ export type Database = {
       }
       posts: {
         Row: {
+          author: string
           body: string
+          category: string
+          content: Json | null
           cover_url: string | null
           created_at: string
           excerpt: string
+          featured: boolean
+          gallery: Json
           id: string
           published: boolean
           published_at: string | null
+          related_article_ids: string[]
+          seo_description: string
+          seo_title: string
           slug: string
+          status: string
+          tags: string[]
           title: string
           updated_at: string
         }
         Insert: {
+          author?: string
           body?: string
+          category?: string
+          content?: Json | null
           cover_url?: string | null
           created_at?: string
           excerpt?: string
+          featured?: boolean
+          gallery?: Json
           id?: string
           published?: boolean
           published_at?: string | null
+          related_article_ids?: string[]
+          seo_description?: string
+          seo_title?: string
           slug: string
+          status?: string
+          tags?: string[]
           title: string
           updated_at?: string
         }
         Update: {
+          author?: string
           body?: string
+          category?: string
+          content?: Json | null
           cover_url?: string | null
           created_at?: string
           excerpt?: string
+          featured?: boolean
+          gallery?: Json
           id?: string
           published?: boolean
           published_at?: string | null
+          related_article_ids?: string[]
+          seo_description?: string
+          seo_title?: string
           slug?: string
+          status?: string
+          tags?: string[]
           title?: string
           updated_at?: string
         }

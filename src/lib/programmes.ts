@@ -26,7 +26,7 @@ export const programmeDetailQuery = (slug: string) => queryOptions({
     if (!programme) return null;
     const [projects, stories] = await Promise.all([
       supabase.from("projects").select("*").eq("program_id", programme.id).eq("published", true).eq("archived", false).order("sort_order").order("title"),
-      programme.related_story_ids.length ? supabase.from("posts").select("*").in("id", programme.related_story_ids).eq("published", true).order("published_at", { ascending: false }) : Promise.resolve({ data: [], error: null }),
+      programme.related_story_ids.length ? supabase.from("posts").select("*").in("id", programme.related_story_ids).eq("published", true).in("status", ["published", "scheduled"]).lte("published_at", new Date().toISOString()).order("published_at", { ascending: false }) : Promise.resolve({ data: [], error: null }),
     ]);
     if (projects.error) throw projects.error;
     if (stories.error) throw stories.error;

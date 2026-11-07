@@ -27,3 +27,8 @@
 - [x] Verify application submission, status changes, hours recording, CSV export, applicant privacy and phone layout; remove temporary records.
 # Phase 8: Request assistance
 - [x] Private assistance requests (public submit only; staff review, assign, status, notes, contact, outcome, archive; admin-only delete).
+
+# Phase 9: News, blog and stories
+- [ ] Expand article records, secure scheduled visibility, and rich-text editing.
+- [ ] Add publishing workspace, category/tag browsing, featured articles, galleries, sharing and related articles.
+- [ ] Verify publishing, scheduling, draft privacy and public read-back; remove temporary records.

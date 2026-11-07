@@ -45,11 +45,13 @@ export const postsQuery = queryOptions({
   queryKey: ["posts", "public"],
   queryFn: async () => {
     const { data, error } = await supabase
-      .from("posts").select("*").eq("published", true)
+      .from("posts").select("*").eq("published", true).in("status", ["published", "scheduled"]).lte("published_at", new Date().toISOString())
       .order("published_at", { ascending: false, nullsFirst: false });
     if (error) throw error;
     return data;
   },
+  staleTime: 0,
+  refetchInterval: 60_000,
 });
 
 export const bySlug = <T extends "programs" | "projects" | "posts">(table: T, slug: string) =>
@@ -59,7 +61,7 @@ export const bySlug = <T extends "programs" | "projects" | "posts">(table: T, sl
       const result = table === "projects"
         ? await supabase.from("projects").select("*").eq("slug", slug).eq("published", true).eq("archived", false).maybeSingle()
         : table === "posts"
-          ? await supabase.from("posts").select("*").eq("slug", slug).eq("published", true).maybeSingle()
+          ? await supabase.from("posts").select("*").eq("slug", slug).eq("published", true).in("status", ["published", "scheduled"]).lte("published_at", new Date().toISOString()).maybeSingle()
           : await supabase.from("programs").select("*").eq("slug", slug).eq("published", true).maybeSingle();
       const { data, error } = result;
       if (error) throw error;
